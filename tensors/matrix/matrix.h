@@ -1,3 +1,6 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
 typedef struct {
     int m, n;
     float** data;
@@ -12,3 +15,5 @@ Matrix new_random_matrix(int m, int n);
 void free_matrix(Matrix M);
 
 void print_matrix(Matrix M);
+
+#endif

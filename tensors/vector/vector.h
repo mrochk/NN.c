@@ -1,3 +1,6 @@
+#ifndef VECTOR_H
+#define VECTOR_H
+
 typedef struct {
     int n;
     float* data;
@@ -12,3 +15,5 @@ Vector new_random_vector(int n);
 void free_vector(Vector v);
 
 void print_vector(Vector v);
+
+#endif

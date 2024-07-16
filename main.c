@@ -4,24 +4,22 @@
 
 #include "tensors/tensors.h"
 #include "utils/utils.h"
+#include "linreg/linreg.h"
 
 int main(int argc, char** argv) {
     srand(time(NULL));
 
-    Matrix A = new_zeros_matrix(4, 3);
-    Matrix B = new_random_matrix(3, 4);
+    Vector x = new_zeros_vector(3);
+    x->data[0] = 1.f;
+    x->data[1] = 2.f;
+    x->data[2] = 3.f;
 
-    Vector v = new_random_vector(10);
+    Linreg model = new_linreg(0.01f, 3);
+    float pred = linreg_predict(model, x);
+    printf("%.2f\n", pred);
 
-    print_matrix(A);
-    puts("");
-    print_matrix(B);
-    puts("");
-    print_vector(v);
-
-    free_matrix(A);
-    free_matrix(B);
-    free_vector(v);
+    free_linreg(model);
+    free_vector(x);
 
     return 0;
 }
