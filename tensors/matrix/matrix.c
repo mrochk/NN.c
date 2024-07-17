@@ -5,7 +5,7 @@
 #include "../vector/vector.h"
 #include "../../utils/utils.h"
 
-Matrix new_zeros_matrix(int m, int n) {
+Matrix new_zeros_matrix_(int m, int n) {
     Matrix matrix = (Matrix) malloc(sizeof(matrix));
 
     matrix->m = m;
@@ -14,13 +14,13 @@ Matrix new_zeros_matrix(int m, int n) {
     matrix->d = (Vector*) malloc(sizeof(Vector*) * m);
 
     for (int i = 0; i < m; i++) {
-        matrix->d[i] = new_zeros_vector(n);
+        matrix->d[i] = new_zeros_vector_(n);
     }
 
     return matrix;
 }
 
-Matrix new_random_float_matrix(int m, int n) {
+Matrix new_random_float_matrix_(int m, int n) {
     Matrix matrix = (Matrix) malloc(sizeof(matrix));
 
     matrix->m = m;
@@ -29,13 +29,13 @@ Matrix new_random_float_matrix(int m, int n) {
     matrix->d = (Vector*) malloc(sizeof(Vector*) * m);
 
     for (int i = 0; i < m; i++) {
-        matrix->d[i] = new_random_float_vector(n);
+        matrix->d[i] = new_random_float_vector_(n);
     }
 
     return matrix;
 }
 
-Matrix new_random_int_matrix(int m, int n, int high) {
+Matrix new_random_int_matrix_(int m, int n, int high) {
     Matrix matrix = (Matrix) malloc(sizeof(matrix));
 
     matrix->m = m;
@@ -44,7 +44,7 @@ Matrix new_random_int_matrix(int m, int n, int high) {
     matrix->d = (Vector*) malloc(sizeof(Vector*) * m);
 
     for (int i = 0; i < m; i++) {
-        matrix->d[i] = new_random_int_vector(n, high);
+        matrix->d[i] = new_random_int_vector_(n, high);
     }
 
     return matrix;

@@ -4,7 +4,7 @@
 #include "vector.h"
 #include "../../utils/utils.h"
 
-Vector new_zeros_vector(int n) {
+Vector new_zeros_vector_(int n) {
     Vector vector = (Vector)malloc(sizeof(Vector));
 
     vector->n = n;
@@ -18,7 +18,7 @@ Vector new_zeros_vector(int n) {
     return vector;
 }
 
-Vector new_random_float_vector(int n) {
+Vector new_random_float_vector_(int n) {
     Vector vector = (Vector)malloc(sizeof(Vector));
 
     vector->n = n;
@@ -32,7 +32,7 @@ Vector new_random_float_vector(int n) {
     return vector;
 }
 
-Vector new_random_int_vector(int n, int high) {
+Vector new_random_int_vector_(int n, int high) {
     Vector vector = (Vector)malloc(sizeof(Vector));
 
     vector->n = n;

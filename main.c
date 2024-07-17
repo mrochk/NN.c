@@ -19,9 +19,9 @@ int main(int argc, char** argv) {
     int n_samples  = 10;
     int n_features = 3;
 
-    Matrix X = new_random_int_matrix(n_samples, n_features, 100); // features
+    Matrix X = new_random_int_matrix_(n_samples, n_features, 100); // features
 
-    Vector y = new_zeros_vector(n_samples); // targets
+    Vector y = new_zeros_vector_(n_samples); // targets
 
     for (int i = 0; i < y->n; i++) {
         float x1 = X->d[i]->d[0], x2 = X->d[i]->d[1], x3 = X->d[i]->d[2];
@@ -36,9 +36,9 @@ int main(int argc, char** argv) {
 
     Linreg linreg = new_linreg(0.0001, n_features);
 
-    Vector preds = new_zeros_vector(n_samples);
+    Vector preds = new_zeros_vector_(n_samples);
 
-    Vector dw = new_zeros_vector(linreg->weights->n);
+    Vector dw = new_zeros_vector_(linreg->weights->n);
 
     for (int i = 0; i < 10; i++) {
         // forward

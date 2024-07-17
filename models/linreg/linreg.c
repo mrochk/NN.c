@@ -9,7 +9,7 @@
 Linreg new_linreg(float lr, int n_features) {
     Linreg linreg = (Linreg) malloc(sizeof(Linreg));
     linreg->lr = lr;
-    linreg->weights = new_random_float_vector(n_features);
+    linreg->weights = new_random_float_vector_(n_features);
     linreg->bias = randfloat();
 
     return linreg;
