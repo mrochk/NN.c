@@ -38,12 +38,9 @@ int main(int argc, char** argv) {
 
     Vector preds = new_zeros_vector(n_samples);
 
-
-    
-
     Vector dw = new_zeros_vector(linreg->weights->n);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 100; i++) {
         // forward
         preds = linreg_predict(linreg, X, preds);
         puts("\nPreds:");
@@ -65,9 +62,17 @@ int main(int argc, char** argv) {
         linreg->bias -= linreg->lr * db;
     }
 
+    preds = linreg_predict(linreg, X, preds);
+    puts("\nFinal preds:");
+    print_vector(preds);
+
+    puts("\nTargets y:");
+    print_vector(y);
+
     free_matrix(X);
     free_vector(y);
     free_vector(preds);
+    free_vector(dw);
     free_linreg(linreg);
 
     return 0;
