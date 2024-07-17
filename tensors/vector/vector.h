@@ -10,7 +10,9 @@ typedef Vector_t* Vector;
 
 Vector new_zeros_vector(int n);
 
-Vector new_random_vector(int n);
+Vector new_random_float_vector(int n);
+
+Vector new_random_int_vector(int n, int high);
 
 void free_vector(Vector v);
 

@@ -1,7 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-float random_float();
+float randfloat();
+
+float randint(int high);
 
 #endif
 

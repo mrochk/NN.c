@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../tensors/tensors.h"
+#include "../../tensors/tensors.h"
 
 typedef struct {
     Vector weights;
@@ -18,6 +18,12 @@ Linreg new_linreg(float lr, int n_features);
 
 void free_linreg(Linreg linreg);
 
-float linreg_predict(Linreg linreg, Vector x);
+Vector linreg_predict(Linreg linreg, Matrix x, Vector preds);
+
+void linreg_fit(Linreg linreg, Matrix M);
+
+Vector compute_dw(Vector preds, Vector y, Matrix X, Vector dw);
+
+float compute_db(Vector preds, Vector y);
 
 #endif
