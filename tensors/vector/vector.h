@@ -3,7 +3,7 @@
 
 typedef struct {
     int n;
-    float* data;
+    float* d;
 } Vector_t;
 
 typedef Vector_t* Vector;

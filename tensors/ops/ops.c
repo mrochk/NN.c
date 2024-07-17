@@ -11,7 +11,7 @@ float dotprod(Vector v, Vector w) {
     int N = v->n;
     float dot = 0.0f;
     for (int i = 0; i < N; i++) {
-        dot += v->data[i] * w->data[i];
+        dot += v->d[i] * w->d[i];
     }
 
     return dot;

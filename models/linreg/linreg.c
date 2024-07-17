@@ -23,10 +23,10 @@ void free_linreg(Linreg linreg) {
 Vector linreg_predict(Linreg linreg, Matrix X, Vector preds) {
     assert(preds && X && linreg);
     assert(X->m > 0);
-    assert(linreg->weights->n == X->data[0]->n);
+    assert(linreg->weights->n == X->d[0]->n);
 
     for (int i = 0; i < X->m; i++) {
-        preds->data[i] = dotprod(linreg->weights, X->data[i]) + linreg->bias;
+        preds->d[i] = dotprod(linreg->weights, X->d[i]) + linreg->bias;
     }
 
     return preds;
@@ -34,14 +34,14 @@ Vector linreg_predict(Linreg linreg, Matrix X, Vector preds) {
 
 Vector compute_dw(Vector preds, Vector y, Matrix X, Vector dw) {
     for (int i = 0; i < X->m; i++) {
-        float error = y->data[i] - preds->data[i];
+        float error = y->d[i] - preds->d[i];
 
         for (int j = 0; j < X->n; j++) {
-            dw->data[j] += -2 * error * X->data[i]->data[j];
+            dw->d[j] += -2 * error * X->d[i]->d[j];
         }
     }
 
-    for (int i = 0; i < X->n; i++) { dw->data[i] /= X->m; }
+    for (int i = 0; i < X->n; i++) { dw->d[i] /= X->m; }
 
     return dw;
 }
@@ -50,7 +50,7 @@ float compute_db(Vector preds, Vector y) {
     float db = 0.0f;
 
     for (int i = 0; i < y->n; i++) {
-        float error = y->data[i] - preds->data[i];
+        float error = y->d[i] - preds->d[i];
         db += -2 * error;
     }
 

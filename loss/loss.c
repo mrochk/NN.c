@@ -16,7 +16,7 @@ float MSE(Vector preds, Vector targets) {
     float sum = 0.0f;
 
     for (int i = 0; i < N; i++) {
-        float error = targets->data[i] - preds->data[i];
+        float error = targets->d[i] - preds->d[i];
         sum += error * error;
     }
 

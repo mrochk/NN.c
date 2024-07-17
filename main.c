@@ -24,8 +24,8 @@ int main(int argc, char** argv) {
     Vector y = new_zeros_vector(n_samples); // targets
 
     for (int i = 0; i < y->n; i++) {
-        float x1 = X->data[i]->data[0], x2 = X->data[i]->data[1], x3 = X->data[i]->data[2];
-        y->data[i] = f(x1, x2, x3);
+        float x1 = X->d[i]->d[0], x2 = X->d[i]->d[1], x3 = X->d[i]->d[2];
+        y->d[i] = f(x1, x2, x3);
     }
 
     puts("Features Matrix X:");
@@ -40,14 +40,14 @@ int main(int argc, char** argv) {
 
     Vector dw = new_zeros_vector(linreg->weights->n);
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10; i++) {
         // forward
         preds = linreg_predict(linreg, X, preds);
-        puts("\nPreds:");
-        print_vector(preds);
+        //puts("\nPreds:");
+        //print_vector(preds);
 
         float loss = MSE(preds, y);
-        printf("\nLoss: %.2f\n", loss);
+        printf("\nLoss: %.2f", loss);
 
         // backward
         dw = compute_dw(preds, y, X, dw);
@@ -56,23 +56,25 @@ int main(int argc, char** argv) {
 
         // updating weights and bias
         for (int i = 0; i < n_features; i++) {
-            linreg->weights->data[i] -= linreg->lr * dw->data[i];
+            linreg->weights->d[i] -= linreg->lr * dw->d[i];
         }
 
         linreg->bias -= linreg->lr * db;
     }
 
     preds = linreg_predict(linreg, X, preds);
-    puts("\nFinal preds:");
+    puts("\n\nFinal preds:");
     print_vector(preds);
 
-    puts("\nTargets y:");
+    puts("Targets y:");
     print_vector(y);
 
     free_matrix(X);
+
     free_vector(y);
     free_vector(preds);
     free_vector(dw);
+
     free_linreg(linreg);
 
     return 0;

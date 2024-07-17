@@ -5,7 +5,7 @@
 
 typedef struct {
     int m, n;
-    Vector* data;
+    Vector* d;
 } Matrix_t;
 
 typedef Matrix_t* Matrix;
