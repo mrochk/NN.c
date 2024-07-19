@@ -5,3 +5,5 @@ Neural Networks from scratch in C.
 *The pointers returned by these must be freed by their associated functions.*
 
 For now the functions derivatives are calculated by hand but I plan on adding an autograd engine to this project soon.
+
+For the optimizer for now we always use SGD.
