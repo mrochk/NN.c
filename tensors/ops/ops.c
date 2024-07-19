@@ -5,6 +5,7 @@
 #include "../vector/vector.h"
 #include "../matrix/matrix.h"
 
+/* calculate the dot product between two vectors */
 float dotprod(Vector v, Vector w) {
     assert(v->n == w->n);
 

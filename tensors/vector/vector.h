@@ -24,7 +24,7 @@ Vector new_random_int_vector_(int n, int high);
 /* free a vector allocated with new_..._vector_ */
 void free_vector(Vector v);
 
-/* print a vector on one line */
+/* print a vector */
 void print_vector(Vector v);
 
 #endif

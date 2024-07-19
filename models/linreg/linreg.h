@@ -18,7 +18,9 @@ Linreg new_linreg(float lr, int n_features);
 
 void free_linreg(Linreg linreg);
 
-Vector linreg_predict(Linreg linreg, Matrix x, Vector preds);
+Vector linreg_predict_batch(Linreg linreg, Matrix x, Vector preds);
+
+float linreg_predict(Linreg linreg, Vector x);
 
 void linreg_fit(Linreg linreg, Matrix M);
 
