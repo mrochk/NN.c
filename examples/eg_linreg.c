@@ -94,10 +94,10 @@ void run_linreg_example(int iters) {
 
     /* free memory */
     free_linreg(linreg);
+
     free_matrix(X);
-    free_vector(y);
-    free_vector(preds);
-    free_vector(dw);
+
+    free_vector(y); free_vector(preds); free_vector(dw); free_vector(input);
 
     return;
 }

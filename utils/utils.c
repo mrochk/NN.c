@@ -13,3 +13,8 @@ float randfloat() {
 float randint(int high) {
     return (float) (rand() % (high + 1));
 }
+
+/* max(a, b) */
+float max(float a, float b) {
+    return (a > b) ? a : b;
+}
