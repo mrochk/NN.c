@@ -12,8 +12,9 @@
 int main(int argc, char** argv) {
     srand(time(NULL));
 
-    run_linreg_example(100);
-    //run_neurons_example();
+    //run_linreg_example(100);
+
+    run_neurons_example();
 
     return EXIT_SUCCESS;
 }

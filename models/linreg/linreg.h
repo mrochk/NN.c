@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../../tensors/tensors.h"
+#include "../tensors/tensors.h"
 
 typedef struct {
     Vector weights;
