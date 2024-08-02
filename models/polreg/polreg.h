@@ -12,4 +12,12 @@ typedef struct {
 
 typedef Polreg_t* Polreg;
 
+Polreg polreg_new_(Vector powers, float lr); 
+
+void polreg_free(Polreg polreg); 
+
+float polreg_predict(Polreg polreg, Vector x);
+
+void polreg_predict_batch(Polreg polreg, Matrix X, Vector preds);
+
 #endif

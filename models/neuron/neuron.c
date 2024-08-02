@@ -3,9 +3,9 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#include "../utils/utils.h"
-#include "../tensors/tensors.h"
-#include "../activations/activations.h"
+#include "../../utils/utils.h"
+#include "../../tensors/tensors.h"
+#include "../../activations/activations.h"
 
 #include "neuron.h"
 

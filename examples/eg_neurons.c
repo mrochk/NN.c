@@ -3,10 +3,11 @@
 #include <stdbool.h>
 #include <time.h>
 
-#include "../tensors/tensors.h"
-#include "../neuron/neuron.h"
-#include "../utils/utils.h"
 #include "../loss/loss.h"
+#include "../utils/utils.h"
+#include "../tensors/tensors.h"
+
+#include "../models/neuron/neuron.h"
 
 void run_neurons_example() {
     /* create data */

@@ -1,7 +1,7 @@
 #ifndef NEURON_H
 #define NEURON_H
 
-#include "../tensors/tensors.h"
+#include "../../tensors/tensors.h"
 
 typedef enum {
     Linear, ReLU, Sigmoid, Tanh,

@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
 
 #include "polreg.h"
 #include "../../utils/utils.h"
 #include "../../tensors/tensors.h"
 
-Polreg polreg_new_(Vector powers, int order, float lr) {
+Polreg polreg_new_(Vector powers, float lr) {
     int n_features  = powers->n;
     Polreg polreg   = (Polreg) malloc(sizeof(Polreg));
     polreg->bias    = randfloat();
@@ -35,4 +36,10 @@ float polreg_predict(Polreg polreg, Vector x) {
     }
 
     return result;
+}
+
+void polreg_predict_batch(Polreg polreg, Matrix X, Vector preds) {
+    for (int i = 0; i < X->m; i++) {
+        preds->d[i] = polreg_predict(polreg, X->d[i]);
+    }
 }

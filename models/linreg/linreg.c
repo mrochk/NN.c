@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <assert.h>
 
+#include "../../utils/utils.h"
+#include "../../tensors/tensors.h"
+
 #include "linreg.h"
-#include "../utils/utils.h"
-#include "../tensors/tensors.h"
 
 Linreg new_linreg(float lr, int n_features) {
     Linreg linreg = (Linreg) malloc(sizeof(Linreg));

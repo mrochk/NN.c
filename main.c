@@ -2,11 +2,8 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "neuron/neuron.h"
-#include "activations/activations.h"
-#include "utils/utils.h"
-
 #include "examples/eg_linreg.c"
+#include "examples/eg_polreg.c"
 #include "examples/eg_neurons.c"
 
 int main(int argc, char** argv) {
@@ -14,7 +11,9 @@ int main(int argc, char** argv) {
 
     //run_linreg_example(100);
 
-    run_neurons_example();
+    run_polreg_example();
+
+    //run_neurons_example();
 
     return EXIT_SUCCESS;
 }
