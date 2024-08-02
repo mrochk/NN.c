@@ -2,20 +2,17 @@
 #define NEURON_H
 
 #include "../../tensors/tensors.h"
-
-typedef enum {
-    Linear, ReLU, Sigmoid, Tanh,
-} Activation;
+#include "../../activations/activations.h"
 
 typedef struct {
     Vector w; /* weights */
     float  b; /* bias */
-    Activation activation; /* activation function */
+    ActivationFunc activation; /* activation function */
 } Neuron_t;
 
 typedef Neuron_t* Neuron; 
 
-Neuron new_neuron_(int n_inputs, Activation activation);
+Neuron new_neuron_(int n_inputs, ActivationFunc activation);
 
 void free_neuron(Neuron n);
 
