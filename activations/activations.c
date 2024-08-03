@@ -7,7 +7,7 @@
 #include "activations.h"
 
 float relu(float x) {
-    return max(x, 0.0f);
+    return maxf(x, 0.0f);
 }
 
 float sigmoid(float x) {

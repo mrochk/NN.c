@@ -3,13 +3,13 @@
 #include <stdbool.h>
 #include <time.h>
 
-#include "../loss/loss.h"
-#include "../utils/utils.h"
-#include "../tensors/tensors.h"
+#include "../../loss/loss.h"
+#include "../../utils/utils.h"
+#include "../../tensors/tensors.h"
 
-#include "../models/neuron/neuron.h"
+#include "../../models/neuron/neuron.h"
 
-void run_neurons_example() {
+void neurons_example() {
     /* create data */
     Vector x = new_random_float_vector_(20);
 

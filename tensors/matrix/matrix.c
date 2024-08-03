@@ -66,7 +66,7 @@ void print_matrix(Matrix matrix) {
         if (i > 0) { printf(" "); }
 
         for (int j = 0; j < matrix->n; j++) {
-            printf(j == matrix->n - 1 ? "%.2f" : "%.2f ", row[j]);
+            printf(j == matrix->n - 1 ? "%04.1f" : "%04.1f ", row[j]);
         }
         puts(i == matrix->m - 1 ? "]" : "");
     }

@@ -2,18 +2,18 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "examples/eg_linreg.c"
-#include "examples/eg_polreg.c"
-#include "examples/eg_neurons.c"
+#include "examples/linreg/example.c"
+#include "examples/polreg/example.c"
+#include "examples/neurons/example.c"
 
 int main(int argc, char** argv) {
     srand(time(NULL));
 
-    //run_linreg_example(100);
+    linreg_run_eg(50);
 
-    run_polreg_example();
+    // polreg_example();
 
-    //run_neurons_example();
+    //neurons_example();
 
     return EXIT_SUCCESS;
 }

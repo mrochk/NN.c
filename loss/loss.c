@@ -1,24 +1,31 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <math.h>
 
 #include "../tensors/tensors.h"
+#include "../utils/utils.h"
 
-/* 
-Mean squared error loss function:
-MSE(y, ŷ) = (1/n) Sum((y_i - ŷ_i)^2 for i = 1 -> N).
-*/
-float MSE(Vector preds, Vector targets) {
-    assert(preds->n == targets->n);
-
-    int N = preds->n;
+/* mean absolute error loss */
+float MAE(Vector p, Vector t) {
+    assert(p && t && p->n == t->n);
 
     float sum = 0.0f;
-
-    for (int i = 0; i < N; i++) {
-        float error = targets->d[i] - preds->d[i];
-        sum += error * error;
+    for (int i = 0; i < p->n; i++) { 
+        sum += absf(t->d[i] - p->d[i]); 
     }
 
-    return sum / N;
+    return sum / p->n;
+}
+
+/* mean squared error loss */
+float MSE(Vector p, Vector t) {
+    assert(p && t && p->n == t->n);
+
+    float sum = 0.0f;
+    for (int i = 0; i < p->n; i++) { 
+        sum += powf(t->d[i] - p->d[i], 2.0F); 
+    }
+
+    return sum / p->n;
 }

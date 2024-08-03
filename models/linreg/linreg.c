@@ -12,8 +12,8 @@ Linreg new_linreg(float lr, int n_features) {
 
     /* learning rate init */
     linreg->lr = lr;
-    /* weights initialized to 0 (worked better than random) */
-    linreg->weights = new_zeros_vector_(n_features);
+    /* weights init */
+    linreg->weights = new_random_float_vector_(n_features);
     /* same for bias */
     linreg->bias = 0.0f;
 

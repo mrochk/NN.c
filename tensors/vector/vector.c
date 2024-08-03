@@ -54,8 +54,8 @@ void free_vector(Vector v) {
 void print_vector(Vector v) {
     printf("[");
     for (int i = 0; i < v->n; i++) {
-        if (i == v->n-1) { printf("%.2f", v->d[i]); } 
-        else { printf("%.2f ", v->d[i]); }
+        if (i == v->n-1) { printf("%04.1f", v->d[i]); } 
+        else { printf("%04.1f ", v->d[i]); }
     }
     puts("]");
 }

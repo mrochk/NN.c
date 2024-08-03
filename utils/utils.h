@@ -9,7 +9,9 @@ float randfloat();
 
 float randint(int high);
 
-float max(float a, float b);
+float maxf(float a, float b);
+
+float absf(float x);
 
 #endif
 

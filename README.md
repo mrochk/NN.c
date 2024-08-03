@@ -2,10 +2,10 @@
 Multi Layer Perceptron & Linear Regression implementation from scratch in pure C.
 
 Models implemented:
-- (multivariate) Linear regression. [\[linreg\]](models/linreg)
-- (multivariate) Polynomial regression. [\[polreg\]](models/polreg)
-- Neural network at the neuron level. [\[neuron\]](models/neuron)
-<!-- - Multi Layer Perceptron. [\[mlp\]](models/mlp) -->
+- (multivariate) Linear regression. [\[linreg\]](models/linreg) [\[example\]](examples/linreg)
+- (multivariate) Polynomial regression. [\[polreg\]](models/polreg) [\[example\]](examples/polreg)
+- Multilayer Perceptron at the neuron (perceptron) level. [\[neuron\]](models/neuron) [\[example\]](examples/neurons)
+<!-- - Multilayer Perceptron. [\[mlp\]](models/mlp) -->
 
 You can find example of using these models in [examples](examples).
 

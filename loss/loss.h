@@ -5,4 +5,6 @@
 
 float MSE(Vector preds, Vector targets); 
 
+float MAE(Vector preds, Vector targets); 
+
 #endif

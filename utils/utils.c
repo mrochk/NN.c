@@ -14,7 +14,12 @@ float randint(int high) {
     return (float) (rand() % (high + 1));
 }
 
-/* max(a, b) */
-float max(float a, float b) {
+/* max(float a, float b) */
+float maxf(float a, float b) {
     return (a > b) ? a : b;
+}
+
+/* abs(float x) */
+float absf(float x) {
+    return (x < 0.0F) ? -x : x;
 }

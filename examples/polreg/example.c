@@ -3,17 +3,17 @@
 #include <stdbool.h>
 #include <time.h>
 
-#include "../tensors/tensors.h"
-#include "../utils/utils.h"
-#include "../loss/loss.h"
+#include "../../tensors/tensors.h"
+#include "../../utils/utils.h"
+#include "../../loss/loss.h"
 
-#include "../models/polreg/polreg.h"
+#include "../../models/polreg/polreg.h"
 
 /*
 Fitting f(x) = sin(2*pi*x) using a polynomial regression model of degree 3.
 Example taken from Deep Learning: Foundations & Concepts by C. Bishop.
 */
-void run_polreg_example() {
+void polreg_example() {
     int n_features = 1;
 
     Vector powers = new_zeros_vector_(n_features); powers->d[0] = 3.0f;
