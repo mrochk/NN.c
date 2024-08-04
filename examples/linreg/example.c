@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <time.h>
+#include <math.h>
 
 #include "../../tensors/tensors.h"
 #include "../../utils/utils.h"

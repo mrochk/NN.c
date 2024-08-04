@@ -38,8 +38,9 @@ float polreg_predict(Polreg polreg, Vector x) {
     return result;
 }
 
-void polreg_predict_batch(Polreg polreg, Matrix X, Vector preds) {
+Vector polreg_predict_batch(Polreg polreg, Matrix X, Vector preds) {
     for (int i = 0; i < X->m; i++) {
         preds->d[i] = polreg_predict(polreg, X->d[i]);
     }
+    return preds;
 }

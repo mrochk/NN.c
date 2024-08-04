@@ -9,9 +9,9 @@
 int main(int argc, char** argv) {
     srand(time(NULL));
 
-    linreg_run_eg(50);
+    // linreg_run_eg(50);
 
-    // polreg_example();
+    polreg_run_eg(50000);
 
     //neurons_example();
 

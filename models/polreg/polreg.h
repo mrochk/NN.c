@@ -18,6 +18,6 @@ void polreg_free(Polreg polreg);
 
 float polreg_predict(Polreg polreg, Vector x);
 
-void polreg_predict_batch(Polreg polreg, Matrix X, Vector preds);
+Vector polreg_predict_batch(Polreg polreg, Matrix X, Vector preds);
 
 #endif

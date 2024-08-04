@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <time.h>
+#include <math.h>
 
 #include "../../tensors/tensors.h"
 #include "../../utils/utils.h"
@@ -9,79 +9,104 @@
 
 #include "../../models/polreg/polreg.h"
 
-/*
-Fitting f(x) = sin(2*pi*x) using a polynomial regression model of degree 3.
-Example taken from Deep Learning: Foundations & Concepts by C. Bishop.
-*/
-void polreg_example() {
-    int n_features = 1;
+void polreg_run_eg(int iters) {
+    /*** create synthetic data using f(x) = sin(2*pi*x) ***/
+    const int n_features = 3;
+    const int datapoints = 20;
 
-    Vector powers = new_zeros_vector_(n_features); powers->d[0] = 3.0f;
-
-    float learning_rate = 0.1f;
-
-    Polreg model = polreg_new_(powers, learning_rate);
-
-    int datapoints = 10000;
-
-    Matrix x = new_random_float_matrix_(datapoints, n_features);
-
-    Vector y = new_zeros_vector_(datapoints);
-    for (int i = 0; i < datapoints; i++) {
-        y->d[i] = sinf(2.0f * x->d[i]->d[0] * ((float)PI));
-    }    
-
-    Vector preds = new_zeros_vector_(datapoints);
-    polreg_predict_batch(model, x, preds);
-
-    printf("Predictions:");
-    print_vector(preds);
-
-    printf("Targets:");
-    print_vector(y);
-
-    printf("Model weights: ");
-    print_vector(model->weights);
-
-    printf("Model powers: ");
-    print_vector(model->powers);
-
-    printf("bias: %.2f\n", model->bias);
-
-    printf("x: ");
-    print_matrix(x);
-
-    float error, dw, db;
-
-    float loss = MSE(preds, y);
-
-    printf("loss: %.2f\n", loss);
-
-    for (int i = 0; i < 100; i++) {
-
-        dw = 0.0F; db = 0.0F;
-
-        for (int j = 0; j < datapoints; j++) {
-            error = y->d[j] - preds->d[j];
-            dw += -2.0F * powf(x->d[j]->d[0], 3.0F) * error;
-            db += -2.0F * error;
-        }
-
-        dw = dw / datapoints;
-        db = db / datapoints;
-
-        model->weights->d[0] -= model->lr * dw;
-        model->bias -= model->lr * db;
-
-        polreg_predict_batch(model, x, preds);
-
-        loss = MSE(preds, y);
-
-        printf("iter %d, loss: %.2f\n", i+1, loss);
-        puts("--------------------");
+	/* features */
+    Matrix X = new_random_float_matrix_(datapoints, n_features); /* features matrix */
+    /* copying the first column in the second */
+    for (int i = 0; i < X->m; i++) {
+        X->d[i]->d[1] = X->d[i]->d[0];
+        X->d[i]->d[2] = X->d[i]->d[0];
     }
 
-    free_matrix(x);
-    free_vector(preds); free_vector(y);
-    polreg_free(model);
+	/* targets */
+	Vector y = new_zeros_vector_(datapoints);
+	for (int i = 0; i < y->n; i++) {
+		float x = X->d[i]->d[0];
+		y->d[i] = sinf(2.F * PI * x);
+	}
+
+	puts("features:");
+	print_matrix(X);
+
+	puts("\ntargets:");
+	print_vector(y);
+
+    /*** initialize the model ***/
+    Vector powers = new_zeros_vector_(n_features); 
+    powers->d[0] = 3.0F; /* we use a polynomial of degree 3 */
+    powers->d[1] = 2.0F; powers->d[2] = 1.0F;
+
+	Polreg model = polreg_new_(powers, .01F);
+
+    /*** perform initial predictions ***/
+	Vector predictions = new_zeros_vector_(datapoints);
+
+	predictions = polreg_predict_batch(model, X, predictions);
+
+	puts("\ninitial predictions:");
+	print_vector(predictions);
+
+	float init_loss = MSE(predictions, y);
+	printf("\ninitial loss (mse) : %.2f\n", init_loss);
+
+    /*** training loop ***/
+	float  db = 0.F, loss;
+    Vector dw = new_zeros_vector_(n_features);
+
+	for (int i = 0; i < iters; i++) {
+		/*** forward ***/
+		predictions = polreg_predict_batch(model, X, predictions);
+
+		loss = MSE(predictions, y);
+        if (iters < 100) {
+		    printf("iter %d, loss: %.2f\n", i, loss);
+        }
+
+		/*** backward ***/
+		db = 0.F;
+        for (int k = 0; k < dw->n; k++) { dw->d[k] = 0.F; }
+
+		/* calculating dw and db */
+		for (int j = 0; j < datapoints; j++) {
+			float ei = y->d[j] - predictions->d[j];
+            float xi = X->d[j]->d[0];
+
+            db += -2.F * ei;
+            for (int k = 0; k < dw->n; k++) { 
+                dw->d[k] += -2.F * powf(xi, model->powers->d[k]) * ei; 
+            }
+		}
+
+        db /= datapoints;
+        for (int k = 0; k < dw->n; k++) { dw->d[k] /= datapoints; }
+
+		/* updating weights */
+		model->bias -= model->lr * db;
+        for (int k = 0; k < dw->n; k++) { 
+            model->weights->d[k] -= model->lr * dw->d[k];
+        }
+	}
+
+	puts("\nfinal weights:");
+	print_vector(model->weights);
+
+	printf("\nfinal bias: %.2f\n", model->bias);
+
+	puts("\nfinal predictions:");
+	print_vector(predictions);
+
+	puts("\ntargets:");
+	print_vector(y);
+
+	printf("\ninitial loss: %.2f\n", init_loss);
+	printf("final loss: %.2f (after %d iterations)\n", loss, iters);
+
+    /*** free allocated data ***/
+	free_matrix(X);
+	free_vector(predictions); free_vector(y); free_vector(powers);
+	polreg_free(model);
 }

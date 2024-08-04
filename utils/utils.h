@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-#define PI acos(-1.0)
+#define PI acosf(-1.0F)
 
 float randfloat();
 
