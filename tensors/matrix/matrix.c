@@ -54,8 +54,8 @@ void free_matrix(Matrix M) {
     for (int i = 0; i < M->m; i++) { 
         free_vector(M->d[i]);
     }
-    free(M->d);
-    free(M);
+    free(M->d); M->d = NULL;
+    free(M); M = NULL;
 }
 
 void print_matrix(Matrix matrix) {

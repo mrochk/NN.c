@@ -4,10 +4,10 @@ all: build
 
 build:
 	@mkdir -p bin
-	@gcc main.c $(C_FILES) -o bin/exe
+	@gcc -g main.c $(C_FILES) -o bin/exe
 
 run: build
 	@./bin/exe
 
 memcheck: build
-	@ valgrind --leak-check=full ./bin/exe
+	@valgrind --leak-check=full --show-leak-kinds=all ./bin/exe

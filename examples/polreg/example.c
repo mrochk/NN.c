@@ -107,6 +107,6 @@ void polreg_run_eg(int iters) {
 
     /*** free allocated data ***/
 	free_matrix(X);
-	free_vector(predictions); free_vector(y); free_vector(powers);
+	free_vector(predictions); free_vector(y); free_vector(dw);
 	polreg_free(model);
 }

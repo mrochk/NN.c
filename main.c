@@ -11,9 +11,9 @@ int main(int argc, char** argv) {
 
     // linreg_run_eg(50);
 
-    polreg_run_eg(50000);
+    // polreg_run_eg(100);
 
-    //neurons_example();
+    // neurons_example();
 
     return EXIT_SUCCESS;
 }

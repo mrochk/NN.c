@@ -21,7 +21,7 @@ Polreg polreg_new_(Vector powers, float lr) {
 void polreg_free(Polreg polreg) {
     free_vector(polreg->powers);
     free_vector(polreg->weights);
-    free(polreg);
+    free(polreg); polreg = NULL;
 }
 
 float polreg_predict(Polreg polreg, Vector x) {

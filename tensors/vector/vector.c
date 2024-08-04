@@ -5,21 +5,19 @@
 #include "../../utils/utils.h"
 
 Vector new_zeros_vector_(int n) {
-    Vector vector = (Vector)malloc(sizeof(Vector));
+    Vector vector = (Vector) malloc(sizeof(Vector));
 
     vector->n = n;
 
     vector->d = malloc(sizeof(float) * n);
 
-    for (int i = 0; i < n; i++) { 
-        vector->d[i] = 0.0f; 
-    }
+    for (int i = 0; i < n; i++) { vector->d[i] = 0.0f; }
 
     return vector;
 }
 
 Vector new_random_float_vector_(int n) {
-    Vector vector = (Vector)malloc(sizeof(Vector));
+    Vector vector = (Vector) malloc(sizeof(Vector));
 
     vector->n = n;
 
@@ -47,8 +45,8 @@ Vector new_random_int_vector_(int n, int high) {
 }
 
 void free_vector(Vector v) {
-    free(v->d);
-    free(v);
+    free(v->d); v->d = NULL;
+    free(v); v = NULL;
 }
 
 void print_vector(Vector v) {
