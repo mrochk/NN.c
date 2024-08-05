@@ -7,33 +7,22 @@
 
 #include "linreg.h"
 
-Linreg new_linreg(float lr, int n_features) {
+Linreg linreg_new_(float lr, int n_features) {
     Linreg linreg = (Linreg) malloc(sizeof(Linreg));
 
     /* learning rate init */
     linreg->lr = lr;
     /* weights init */
-    linreg->weights = new_random_float_vector_(n_features);
+    linreg->weights = vector_new_randfloat_(n_features);
     /* same for bias */
     linreg->bias = 0.0f;
 
     return linreg;
 }
 
-void free_linreg(Linreg linreg) {
-    free_vector(linreg->weights);
+void linreg_free(Linreg linreg) {
+    vector_free(linreg->weights);
     free(linreg);
-}
-
-Vector linreg_predict_batch(Linreg linreg, Matrix X, Vector preds) { assert(preds && X && linreg);
-    assert(X->m > 0);
-    assert(linreg->weights->n == X->d[0]->n);
-
-    for (int i = 0; i < X->m; i++) {
-        preds->d[i] = dotprod(linreg->weights, X->d[i]) + linreg->bias;
-    }
-
-    return preds;
 }
 
 float linreg_predict(Linreg linreg, Vector x) {
@@ -46,27 +35,13 @@ float linreg_predict(Linreg linreg, Vector x) {
     return pred;
 }
 
-Vector compute_dw(Vector preds, Vector y, Matrix X, Vector dw) {
+Vector linreg_predict_batch(Linreg linreg, Matrix X, Vector preds) { assert(preds && X && linreg);
+    assert(X->m > 0);
+    assert(linreg->weights->n == X->d[0]->n);
+
     for (int i = 0; i < X->m; i++) {
-        float error = y->d[i] - preds->d[i];
-
-        for (int j = 0; j < X->n; j++) {
-            dw->d[j] += -2 * error * X->d[i]->d[j];
-        }
+        preds->d[i] = dotprod(linreg->weights, X->d[i]) + linreg->bias;
     }
 
-    for (int i = 0; i < X->n; i++) { dw->d[i] /= X->m; }
-
-    return dw;
-}
-
-float compute_db(Vector preds, Vector y) {
-    float db = 0.0f;
-
-    for (int i = 0; i < y->n; i++) {
-        float error = y->d[i] - preds->d[i];
-        db += -2 * error;
-    }
-
-    return db / y->n;
+    return preds;
 }

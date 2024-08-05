@@ -15,10 +15,10 @@ void linreg_run_eg(int iters) {
     const int datapoints = 20;
 
 	/* features */
-    Matrix X = new_random_int_matrix_(datapoints, n_features, 20); /* features matrix */
+    Matrix X = matrix_new_randint_(datapoints, n_features, 20); /* features matrix */
 
 	/* targets */
-	Vector y = new_zeros_vector_(datapoints);
+	Vector y = vector_new_zeros_(datapoints);
 	for (int i = 0; i < y->n; i++) {
 		Vector row = X->d[i];
 		float x1 = row->d[0], x2 = row->d[1], x3 = row->d[2];
@@ -26,27 +26,27 @@ void linreg_run_eg(int iters) {
 	}
 
 	puts("features:");
-	print_matrix(X);
+	matrix_print(X);
 
 	puts("\ntargets:");
-	print_vector(y);
+	vector_print(y);
 
     /*** initialize the model ***/
-	Linreg model = new_linreg(0.01F /* loss */, n_features );
+	Linreg model = linreg_new_(0.01F /* loss */, n_features );
 
     /*** perform initial predictions ***/
-	Vector predictions = new_zeros_vector_(datapoints);
+	Vector predictions = vector_new_zeros_(datapoints);
 
 	predictions = linreg_predict_batch(model, X, predictions);
 
 	puts("\ninitial predictions:");
-	print_vector(predictions);
+	vector_print(predictions);
 
 	float loss = MAE(predictions, y);
 	printf("\ninitial loss (mae) : %.2f\n", loss);
 
     /*** training loop ***/
-	Vector dw = new_zeros_vector_(model->weights->n);
+	Vector dw = vector_new_zeros_(model->weights->n);
 	float  db = 0.0F;
 
 	for (int i = 0; i < iters; i++) {
@@ -54,7 +54,10 @@ void linreg_run_eg(int iters) {
 		predictions = linreg_predict_batch(model, X, predictions);
 
 		loss = MAE(predictions, y);
-		printf("iter %d, loss: %.2f\n", i, loss);
+
+        if (iters < MAX_ITERS_LOG) {
+		    printf("iter %d, loss: %.2f\n", i+1, loss);
+        }
 
 		/*** backward ***/
 		db = 0.0F;
@@ -82,20 +85,20 @@ void linreg_run_eg(int iters) {
 	}
 
 	puts("\nfinal weights:");
-	print_vector(model->weights);
+	vector_print(model->weights);
 
 	printf("\nfinal bias: %.2f\n", model->bias);
 
 	puts("\nfinal predictions:");
-	print_vector(predictions);
+	vector_print(predictions);
 
 	puts("\ntargets:");
-	print_vector(y);
+	vector_print(y);
 
 	printf("\nfinal loss: %.2f\n", loss);
 
     /*** free allocated data ***/
-	free_matrix(X);
-	free_vector(predictions); free_vector(y); free_vector(dw);
-	free_linreg(model);
+	matrix_free(X);
+	vector_free(predictions); vector_free(y); vector_free(dw);
+	linreg_free(model);
 }

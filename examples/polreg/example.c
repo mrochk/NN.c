@@ -15,7 +15,7 @@ void polreg_run_eg(int iters) {
     const int datapoints = 20;
 
 	/* features */
-    Matrix X = new_random_float_matrix_(datapoints, n_features); /* features matrix */
+    Matrix X = matrix_new_randfloat_(datapoints, n_features); /* features matrix */
     /* copying the first column in the second */
     for (int i = 0; i < X->m; i++) {
         X->d[i]->d[1] = X->d[i]->d[0];
@@ -23,47 +23,48 @@ void polreg_run_eg(int iters) {
     }
 
 	/* targets */
-	Vector y = new_zeros_vector_(datapoints);
+	Vector y = vector_new_zeros_(datapoints);
 	for (int i = 0; i < y->n; i++) {
 		float x = X->d[i]->d[0];
 		y->d[i] = sinf(2.F * PI * x);
 	}
 
 	puts("features:");
-	print_matrix(X);
+	matrix_print(X);
 
 	puts("\ntargets:");
-	print_vector(y);
+	vector_print(y);
 
     /*** initialize the model ***/
-    Vector powers = new_zeros_vector_(n_features); 
+    Vector powers = vector_new_zeros_(n_features); 
     powers->d[0] = 3.0F; /* we use a polynomial of degree 3 */
     powers->d[1] = 2.0F; powers->d[2] = 1.0F;
 
 	Polreg model = polreg_new_(powers, .01F);
 
     /*** perform initial predictions ***/
-	Vector predictions = new_zeros_vector_(datapoints);
+	Vector predictions = vector_new_zeros_(datapoints);
 
 	predictions = polreg_predict_batch(model, X, predictions);
 
 	puts("\ninitial predictions:");
-	print_vector(predictions);
+	vector_print(predictions);
 
 	float init_loss = MSE(predictions, y);
 	printf("\ninitial loss (mse) : %.2f\n", init_loss);
 
     /*** training loop ***/
 	float  db = 0.F, loss;
-    Vector dw = new_zeros_vector_(n_features);
+    Vector dw = vector_new_zeros_(n_features);
 
 	for (int i = 0; i < iters; i++) {
 		/*** forward ***/
 		predictions = polreg_predict_batch(model, X, predictions);
 
 		loss = MSE(predictions, y);
-        if (iters < 100) {
-		    printf("iter %d, loss: %.2f\n", i, loss);
+
+        if (iters < MAX_ITERS_LOG) {
+		    printf("iter %d, loss: %.2f\n", i+1, loss);
         }
 
 		/*** backward ***/
@@ -92,21 +93,21 @@ void polreg_run_eg(int iters) {
 	}
 
 	puts("\nfinal weights:");
-	print_vector(model->weights);
+	vector_print(model->weights);
 
 	printf("\nfinal bias: %.2f\n", model->bias);
 
 	puts("\nfinal predictions:");
-	print_vector(predictions);
+	vector_print(predictions);
 
 	puts("\ntargets:");
-	print_vector(y);
+	vector_print(y);
 
 	printf("\ninitial loss: %.2f\n", init_loss);
 	printf("final loss: %.2f (after %d iterations)\n", loss, iters);
 
     /*** free allocated data ***/
-	free_matrix(X);
-	free_vector(predictions); free_vector(y); free_vector(dw);
+	matrix_free(X);
+	vector_free(predictions); vector_free(y); vector_free(dw);
 	polreg_free(model);
 }

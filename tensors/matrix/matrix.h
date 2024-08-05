@@ -15,18 +15,18 @@ typedef struct {
 typedef Matrix_t* Matrix;
 
 /* create a new matrix of size (m, n) filled with zeros */
-Matrix new_zeros_matrix_(int m, int n);
+Matrix matrix_new_zeros_(int m, int n);
 
 /* create a new matrix of size (m, n) filled with random floats in [0, 1] */
-Matrix new_random_float_matrix_(int m, int n);
+Matrix matrix_new_randfloat_(int m, int n);
 
 /* create a new matrix of size (m, n) filled with random ints in [0, high] */
-Matrix new_random_int_matrix_(int m, int n, int high);
+Matrix matrix_new_randint_(int m, int n, int high);
 
 /* free a matrix allocated with new_..._matrix_ */
-void free_matrix(Matrix M);
+void matrix_free(Matrix M);
 
 /* print a matrix one line per row */
-void print_matrix(Matrix M);
+void matrix_print(Matrix M);
 
 #endif

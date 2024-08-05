@@ -11,7 +11,7 @@ Polreg polreg_new_(Vector powers, float lr) {
     int n_features  = powers->n;
     Polreg polreg   = (Polreg) malloc(sizeof(Polreg));
     polreg->bias    = randfloat();
-    polreg->weights = new_random_float_vector_(n_features);
+    polreg->weights = vector_new_randfloat_(n_features);
     polreg->powers  = powers;
     polreg->lr      = lr;
 
@@ -19,8 +19,8 @@ Polreg polreg_new_(Vector powers, float lr) {
 }
 
 void polreg_free(Polreg polreg) {
-    free_vector(polreg->powers);
-    free_vector(polreg->weights);
+    vector_free(polreg->powers);
+    vector_free(polreg->weights);
     free(polreg); polreg = NULL;
 }
 

@@ -3,6 +3,8 @@
 
 #include <math.h>
 
+#define MAX_ITERS_LOG 100
+
 #define PI acosf(-1.0F)
 
 float randfloat();

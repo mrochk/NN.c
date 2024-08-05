@@ -13,18 +13,18 @@ typedef struct {
 typedef Vector_t* Vector;
 
 /* create a new vector of dimension n filled with zeros */
-Vector new_zeros_vector_(int n);
+Vector vector_new_zeros_(int n);
 
 /* create a new vector of dimension n filled with random floats in [0, 1] */
-Vector new_random_float_vector_(int n);
+Vector vector_new_randfloat_(int n);
 
 /* create a new vector of dimension n filled with random ints in [0, high] */
-Vector new_random_int_vector_(int n, int high);
+Vector vector_new_randint_(int n, int high);
 
 /* free a vector allocated with new_..._vector_ */
-void free_vector(Vector v);
+void vector_free(Vector v);
 
 /* print a vector */
-void print_vector(Vector v);
+void vector_print(Vector v);
 
 #endif

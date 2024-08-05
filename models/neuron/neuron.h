@@ -12,9 +12,9 @@ typedef struct {
 
 typedef Neuron_t* Neuron; 
 
-Neuron new_neuron_(int n_inputs, ActivationFunc activation);
+Neuron neuron_new_(int n_inputs, ActivationFunc activation);
 
-void free_neuron(Neuron n);
+void neuron_free(Neuron n);
 
 float neuron_forward(Neuron n, Vector x);
 

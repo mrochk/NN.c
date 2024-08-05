@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "vector.h"
 #include "../../utils/utils.h"
 
-Vector new_zeros_vector_(int n) {
+Vector vector_new_zeros_(int n) {
     Vector vector = (Vector) malloc(sizeof(Vector));
 
     vector->n = n;
@@ -16,7 +17,7 @@ Vector new_zeros_vector_(int n) {
     return vector;
 }
 
-Vector new_random_float_vector_(int n) {
+Vector vector_new_randfloat_(int n) {
     Vector vector = (Vector) malloc(sizeof(Vector));
 
     vector->n = n;
@@ -30,7 +31,7 @@ Vector new_random_float_vector_(int n) {
     return vector;
 }
 
-Vector new_random_int_vector_(int n, int high) {
+Vector vector_new_randint_(int n, int high) {
     Vector vector = (Vector)malloc(sizeof(Vector));
 
     vector->n = n;
@@ -44,16 +45,24 @@ Vector new_random_int_vector_(int n, int high) {
     return vector;
 }
 
-void free_vector(Vector v) {
+void vector_free(Vector v) {
     free(v->d); v->d = NULL;
     free(v); v = NULL;
 }
 
-void print_vector(Vector v) {
+void vector_print(Vector v) {
     printf("[");
     for (int i = 0; i < v->n; i++) {
-        if (i == v->n-1) { printf("%.2f", v->d[i]); } 
-        else { printf("%.2f ", v->d[i]); }
+        float x = v->d[i];
+
+        if (i == v->n-1) { 
+            if (ceilf(x) == x) { printf("%d", (int)x); } 
+            else { printf("%.2f", v->d[i]); }
+        } 
+        else { 
+            if (ceilf(x) == x) { printf("%d ", (int)x); } 
+            else { printf("%.2f ", v->d[i]); }
+        }
     }
     puts("]");
 }

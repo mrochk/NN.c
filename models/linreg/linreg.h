@@ -14,18 +14,12 @@ typedef struct {
 
 typedef Linreg_t* Linreg;
 
-Linreg new_linreg(float lr, int n_features);
+Linreg linreg_new_(float lr, int n_features);
 
-void free_linreg(Linreg linreg);
-
-Vector linreg_predict_batch(Linreg linreg, Matrix x, Vector preds);
+void linreg_free(Linreg linreg);
 
 float linreg_predict(Linreg linreg, Vector x);
 
-void linreg_fit(Linreg linreg, Matrix M);
-
-Vector compute_dw(Vector preds, Vector y, Matrix X, Vector dw);
-
-float compute_db(Vector preds, Vector y);
+Vector linreg_predict_batch(Linreg linreg, Matrix x, Vector preds);
 
 #endif

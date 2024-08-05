@@ -9,9 +9,9 @@
 
 #include "neuron.h"
 
-Neuron new_neuron_(int n_inputs, ActivationFunc activation) {
+Neuron neuron_new_(int n_inputs, ActivationFunc activation) {
     Neuron neuron = (Neuron) malloc(sizeof(Neuron));
-    neuron->w = new_random_float_vector_(n_inputs);
+    neuron->w = vector_new_randfloat_(n_inputs);
     neuron->b = randfloat();
     neuron->activation = activation;
 
@@ -19,8 +19,8 @@ Neuron new_neuron_(int n_inputs, ActivationFunc activation) {
     return neuron;
 }
 
-void free_neuron(Neuron n) {
-    free_vector(n->w);
+void neuron_free(Neuron n) {
+    vector_free(n->w);
     free(n);
 }
 
