@@ -10,20 +10,16 @@
 #include "../../models/neuron/neuron.h"
 
 Vector forward(Neuron nh1, Neuron nh2, Neuron no, Matrix X, Vector preds) {
-    Vector h1 = vector_new_zeros_(preds->n);
+    Vector h1 = vector_new_(preds->n);
     h1 = neuron_forward_batch(nh1, X, h1);
 
-    Vector h2 = vector_new_zeros_(preds->n);
+    Vector h2 = vector_new_(preds->n);
     h2 = neuron_forward_batch(nh2, X, h2);
 
-    Matrix H = matrix_new_zeros_(X->m, 2);
-    for (int i = 0; i < X->m; i++) {
-        H->d[i]->d[0] = h1->d[i];
-        H->d[i]->d[1] = h2->d[i];
-    }
+    Vector vectors[] = {h1, h2};
+    Matrix H = matrix_from_vectors(2, vectors, 1);
 
-    vector_free(h1);
-    vector_free(h2);
+    vector_free(h1); vector_free(h2);
 
     preds = neuron_forward_batch(no, H, preds);
 
@@ -41,7 +37,7 @@ void neurons_run_eg(int iters) {
     Matrix X = matrix_new_randint_(datapoints, n_features, 20); /* features matrix */
 
 	/* targets */
-	Vector y = vector_new_zeros_(datapoints);
+	Vector y = vector_new_(datapoints);
 	for (int i = 0; i < y->n; i++) {
 		Vector row = X->d[i];
 		float x1 = row->d[0], x2 = row->d[1];
@@ -69,8 +65,6 @@ void neurons_run_eg(int iters) {
 
 	float loss = MSE(predictions, y);
 	printf("\ninitial loss (mse) : %.2f\n", loss);
-
-    exit(0);
 
     ///*** training loop ***/
 	//Vector dw = vector_new_zeros_(model->weights->n);
@@ -124,8 +118,8 @@ void neurons_run_eg(int iters) {
 
 	//printf("\nfinal loss: %.2f\n", loss);
 
-    ///*** free allocated data ***/
-	//matrix_free(X);
-	//vector_free(predictions); vector_free(y); vector_free(dw);
-	//linreg_free(model);
+    /*** free allocated data ***/
+	matrix_free(X);
+	vector_free(predictions); vector_free(y); // vector_free(dw);
+    neuron_free(nh1); neuron_free(nh2); neuron_free(no);
 }

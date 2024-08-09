@@ -24,6 +24,12 @@ void neuron_free(Neuron n) {
     free(n);
 }
 
+void neurons_free(int n, Neuron* neurons) {
+    for (int i = 0; i < n; i++) {
+        neuron_free(neurons[n]);
+    }
+}
+
 float neuron_forward(Neuron n, Vector x) {
     /* z = x.T @ w + b */
     float z = dotprod(x, n->w) + n->b;

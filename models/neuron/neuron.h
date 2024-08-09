@@ -16,6 +16,8 @@ Neuron neuron_new_(int n_inputs, ActivationFunc activation);
 
 void neuron_free(Neuron n);
 
+void neurons_free(int n, Neuron* neurons);
+
 float neuron_forward(Neuron n, Vector x);
 
 Vector neuron_forward_batch(Neuron n, Matrix X, Vector preds);

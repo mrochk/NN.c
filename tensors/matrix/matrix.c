@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "matrix.h"
 #include "../vector/vector.h"
@@ -31,12 +32,9 @@ Matrix matrix_new_zeros_(int m, int n) {
 
 Matrix matrix_new_randfloat_(int m, int n) {
     Matrix matrix = (Matrix) malloc(sizeof(matrix));
-
     matrix->m = m;
     matrix->n = n;
-    
     matrix->d = (Vector*) malloc(sizeof(Vector*) * m);
-
     for (int i = 0; i < m; i++) {
         matrix->d[i] = vector_new_randfloat_(n);
     }
@@ -46,12 +44,9 @@ Matrix matrix_new_randfloat_(int m, int n) {
 
 Matrix matrix_new_randint_(int m, int n, int high) {
     Matrix matrix = (Matrix) malloc(sizeof(matrix));
-
     matrix->m = m;
     matrix->n = n;
-    
     matrix->d = (Vector*) malloc(sizeof(Vector*) * m);
-
     for (int i = 0; i < m; i++) {
         matrix->d[i] = vector_new_randint_(n, high);
     }
@@ -69,7 +64,7 @@ Matrix matrix_from_vectors(int n, Vector* vectors, int axis) {
     }
 
     if (axis == 0) {
-        Matrix M = matrix_new_zeros_(n, len);
+        Matrix M = matrix_new_(n, len);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < len; j++) {
                 M->d[i]->d[j] = vectors[i]->d[j];
@@ -79,10 +74,10 @@ Matrix matrix_from_vectors(int n, Vector* vectors, int axis) {
     }
     
     // elif axis == 1
-    Matrix M = matrix_new_zeros_(len, n);
+    Matrix M = matrix_new_(len, n);
     for (int i = 0; i < len; i++) {
         for (int j = 0; j < n; j++) {
-            M->d[i]->d[j] = vectors[i]->d[j];
+            M->d[i]->d[j] = vectors[j]->d[i];
         }
     }
     return M;
