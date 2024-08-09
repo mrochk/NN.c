@@ -5,25 +5,23 @@
 #include "vector.h"
 #include "../../utils/utils.h"
 
-Vector vector_new_zeros_(int n) {
+Vector vector_new_(int n) {
     Vector vector = (Vector) malloc(sizeof(Vector));
-
     vector->n = n;
-
     vector->d = malloc(sizeof(float) * n);
 
+    return vector;
+}
+
+Vector vector_new_zeros_(int n) {
+    Vector vector = vector_new_(n);
     for (int i = 0; i < n; i++) { vector->d[i] = 0.0f; }
 
     return vector;
 }
 
 Vector vector_new_randfloat_(int n) {
-    Vector vector = (Vector) malloc(sizeof(Vector));
-
-    vector->n = n;
-
-    vector->d = malloc(sizeof(float) * n);
-
+    Vector vector = vector_new_(n);
     for (int i = 0; i < n; i++) { 
         vector->d[i] = randfloat(); 
     }
@@ -32,12 +30,7 @@ Vector vector_new_randfloat_(int n) {
 }
 
 Vector vector_new_randint_(int n, int high) {
-    Vector vector = (Vector)malloc(sizeof(Vector));
-
-    vector->n = n;
-
-    vector->d = malloc(sizeof(float) * n);
-
+    Vector vector = vector_new_(n);
     for (int i = 0; i < n; i++) { 
         vector->d[i] = randint(high); 
     }

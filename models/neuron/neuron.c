@@ -32,6 +32,14 @@ float neuron_forward(Neuron n, Vector x) {
         case Linear:  return z;
         case Sigmoid: return sigmoid(z);
         case ReLU:    return relu(z);
-        default:      return -1.0f;
+        default:      assert(0);
     }
+}
+
+Vector neuron_forward_batch(Neuron n, Matrix X, Vector preds) {
+    for (int i = 0; i < X->m; i++) {
+        Vector x = X->d[i];
+        preds->d[i] = neuron_forward(n, x);
+    }
+    return preds;
 }

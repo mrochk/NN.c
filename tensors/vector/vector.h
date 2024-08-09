@@ -4,13 +4,16 @@
 /* vector of floats of dimension n */
 typedef struct {
     /* vector dimension */
-    int n;
+    size_t n;
     /* vector data */
     float* d;
 } Vector_t;
 
 /* vector of floats of dimension n */
 typedef Vector_t* Vector;
+
+/* create a new vector of dimension n not initialized with any value */
+Vector vector_new_(int n);
 
 /* create a new vector of dimension n filled with zeros */
 Vector vector_new_zeros_(int n);

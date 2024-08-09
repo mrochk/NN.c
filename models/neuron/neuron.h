@@ -18,4 +18,6 @@ void neuron_free(Neuron n);
 
 float neuron_forward(Neuron n, Vector x);
 
+Vector neuron_forward_batch(Neuron n, Matrix X, Vector preds);
+
 #endif

@@ -10,7 +10,7 @@
 float MAE(Vector p, Vector t) {
     assert(p && t && p->n == t->n);
 
-    float sum = 0.0f;
+    float sum = 0.F;
     for (int i = 0; i < p->n; i++) { 
         sum += absf(t->d[i] - p->d[i]); 
     }
@@ -22,9 +22,9 @@ float MAE(Vector p, Vector t) {
 float MSE(Vector p, Vector t) {
     assert(p && t && p->n == t->n);
 
-    float sum = 0.0f;
+    float sum = 0.F;
     for (int i = 0; i < p->n; i++) { 
-        sum += powf(t->d[i] - p->d[i], 2.0F); 
+        sum += powf(t->d[i] - p->d[i], 2.F); 
     }
 
     return sum / p->n;
