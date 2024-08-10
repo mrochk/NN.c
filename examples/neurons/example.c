@@ -33,8 +33,8 @@ void neurons_run_eg(int iters) {
     const int n_features = 2;
     const int datapoints = 20;
 
-	/* features */
-    Matrix X = matrix_new_randint_(datapoints, n_features, 20); /* features matrix */
+	/* features matrix */
+    Matrix X = matrix_new_randint_(datapoints, n_features, 20); 
 
 	/* targets */
 	Vector y = vector_new_(datapoints);
