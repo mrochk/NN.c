@@ -10,3 +10,7 @@ Models implemented:
 For now the functions derivatives / weights gradients are calculated *"by hand"* for each example but I plan on building an autograd engine soon too.
 
 For the optimizer we always use the simple *non-stochastic* gradient descent algorithm.
+
+todo:
+- [ ] finish neurons example
+- [ ] implement mlp
