@@ -1,5 +1,5 @@
 # nn.c
-Multi Layer Perceptron & Linear Regression implementation from scratch in pure C.
+Multilayer Perceptron & other ML models implemented from scratch in pure C.
 
 Models implemented:
 - (multivariate) Linear regression. [\[linreg\]](models/linreg) [\[example\]](examples/linreg)
