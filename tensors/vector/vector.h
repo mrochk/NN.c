@@ -27,6 +27,9 @@ Vector vector_new_randint_(int n, int high);
 /* free a vector allocated with new_..._vector_ */
 void vector_free(Vector v);
 
+/* set all values of v to 0 */
+Vector vector_set_zeros(Vector v);
+
 /* print a vector */
 void vector_print(Vector v);
 

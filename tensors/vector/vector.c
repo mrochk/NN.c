@@ -43,6 +43,11 @@ void vector_free(Vector v) {
     free(v); v = NULL;
 }
 
+Vector vector_set_zeros(Vector v) {
+    for (int i = 0; i < v->n; i++) { v->d[i] = 0.F; }
+    return v;
+}
+
 void vector_print(Vector v) {
     printf("[");
     for (int i = 0; i < v->n; i++) {
