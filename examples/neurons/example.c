@@ -62,11 +62,12 @@ void neurons_run_eg(int iters) {
 	puts("\ninitial predictions:");
 	vector_print(predictions);
 
-	float loss = MSE(predictions, y);
-	printf("\ninitial loss (mse) : %.2f\n", loss);
+	float init_loss = MSE(predictions, y);
 
     ///*** training loop ***/
 	float lr = 0.001; /* learning rate */
+
+	float loss = 0.F;
 
 	Vector dw_h1 = vector_new_zeros_(nh1->w->n); /* will store ∇_{w_h1,1, w_h1,2}L */
 	Vector dw_h2 = vector_new_zeros_(nh1->w->n); /* will store ∇_{w_h2,1, w_h2,2}L */
@@ -75,18 +76,20 @@ void neurons_run_eg(int iters) {
 	/* ∇_{b_h1, b_h2, b_o}L */
 	float db_h1 = 0.F, db_h2 = 0.F, db_o = 0.F;
 
-	for (int iter = 0; iter < 100; iter++) {
+	for (int iter = 0; iter < iters; iter++) {
 		/* set gradients to zero */
-		dw_h1 = vector_set_zeros(dw_h1);
-		dw_h2 = vector_set_zeros(dw_h2);
-		dw_o  = vector_set_zeros(dw_o);
+		vector_set_zeros(dw_h1);
+		vector_set_zeros(dw_h2);
+		vector_set_zeros(dw_o);
 		db_h1 = db_h2 = db_o = 0.F;
 
 		/* forward */
 		H = forward(nh1, nh2, no, X, predictions);
 
 		loss = MSE(predictions, y); 
-		printf("-- iter %d, loss: %.2f\n", iter+1, loss);
+		if (iters <= 100) {
+			printf("-- iter %d, loss: %.2f\n", iter+1, loss);
+		}
 
 		/* backward */
 
@@ -112,8 +115,10 @@ void neurons_run_eg(int iters) {
 		db_o /= datapoints;
 
 		/* compute dL/dw_h */
+		// TODO
 
 		/* compute dL/db_h */
+		// TODO
 
 		/* update neurons */
 		for (int i = 0; i < dw_o->n; i++) {
@@ -131,6 +136,8 @@ void neurons_run_eg(int iters) {
 
 	puts("targets:");
 	vector_print(y);
+
+	printf("\ninitial loss (mse) : %.2f\n", init_loss);
 
 	printf("\nfinal loss: %.2f\n", loss);
 

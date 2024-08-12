@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
 
     //polreg_run_eg(ITERS_DEFAULT);
 
-    neurons_run_eg(10);
+    neurons_run_eg(10000);
 
     return EXIT_SUCCESS;
 }
