@@ -6,7 +6,7 @@
 #include "examples/polreg/example.c"
 #include "examples/neurons/example.c"
 
-#include "models/mlp/mlp.h"
+#include "models/nn/nn.h"
 
 #define ITERS_DEFAULT 50
 

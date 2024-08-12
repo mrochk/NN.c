@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "mlp.h"
+#include "nn.h"
 
 Layer layer_new_(int inputs, int outputs, ActivationFunc activation) {
     Layer layer = (Layer) malloc(sizeof(Layer));
