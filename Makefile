@@ -1,4 +1,4 @@
-C_FILES = utils/utils.c tensors/ops/ops.c tensors/matrix/matrix.c tensors/vector/vector.c loss/loss.c models/linreg/linreg.c models/neuron/neuron.c models/polreg/polreg.c activations/activations.c -lm
+C_FILES = utils/utils.c tensors/ops/ops.c tensors/matrix/matrix.c tensors/vector/vector.c loss/loss.c models/linreg/linreg.c models/neuron/neuron.c models/polreg/polreg.c models/mlp/mlp.c activations/activations.c -lm
 
 all: build
 

@@ -6,4 +6,8 @@
 
 float dotprod(Vector v, Vector w);
 
+Vector vector_matrix_mul(Vector v, Matrix A, Vector r);
+
+Vector vector_add(Vector v, Vector w, Vector r);
+
 #endif

@@ -3,14 +3,15 @@
 
 #include "../../tensors/tensors.h"
 #include "../../activations/activations.h"
+#include "../../utils/utils.h"
 
-typedef struct {
+struct Neuron_t {
     Vector w; /* weights */
     float  b; /* bias */
     ActivationFunc activation; /* activation function */
-} Neuron_t;
+};
 
-typedef Neuron_t* Neuron; 
+typedef struct Neuron_t* Neuron; 
 
 Neuron neuron_new_(int n_inputs, ActivationFunc activation);
 
