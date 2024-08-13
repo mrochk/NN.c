@@ -29,6 +29,11 @@ Matrix matrix_new_randint_(int m, int n, int high);
 /* create a new matrix by concatenating vectors along the given axis */
 Matrix matrix_from_vectors(int n, Vector* vectors, int axis);
 
+Matrix matrix_new_from_(Matrix M);
+
+/* copy A in B */
+void matrix_copy(Matrix A, Matrix B);
+
 /* free a matrix allocated with new_..._matrix_ */
 void matrix_free(Matrix M);
 

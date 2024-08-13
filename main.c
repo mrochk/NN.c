@@ -19,26 +19,30 @@ int main(int argc, char** argv) {
 
     //linreg_run_eg(ITERS_DEFAULT);
     //polreg_run_eg(ITERS_DEFAULT);
-    //neurons_run_eg(10000);
+    //neurons_run_eg(ITERS_DEFAULT);
 
-    Pair l1 = {1, 2};
-    Pair l2 = {2, 1};
+    Matrix X = matrix_new_randint_(1000, 5, 10);
 
-    Pair nn_struct[] = {l1, l2};
+    Pair l1 = {5,  100};
+    Pair l2 = {100, 10};
+    Pair l3 = {10, 3};
 
-    NN nn = nn_new_(2, nn_struct, ReLU);
+    Pair arch[] = {l1, l2, l3};
 
-    Vector x = vector_new_(1);
-    x->d[0] = -10;
+    Matrix Out = matrix_new_(1000, 3);
 
-    vector_print(x);
-    x = nn_forward(nn, x);
+    NN nn = nn_new_(3, arch, ReLU);
 
-    vector_print(x);
+    matrix_print(X);
 
+    nn_forward_batch(nn, X, Out);
+
+    //matrix_apply(Out, );
+
+    matrix_print(Out);
+
+    matrix_free(Out); matrix_free(X);
     nn_free(nn);
-
-    vector_free(x);
 
     return EXIT_SUCCESS;
 }

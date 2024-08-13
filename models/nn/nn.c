@@ -32,12 +32,28 @@ void layer_forward(Layer layer, Vector x, Vector out) {
     assert(layer->outputs == out->n);
 
     /* z = x@W + b */
-    matrix_vector_mul(layer->weights, x, out);
+    matvecmul(layer->weights, x, out);
     vector_add(out, layer->biases);
 
     /* apply activation func */
     vector_apply(out, layer->activation);
 }
+
+/* computing f(X@W + b) with f being the chosen activation func */
+void layer_forward_batch(Layer layer, Matrix X, Matrix Out) {
+    assert(layer->inputs  == X->n);
+    assert(layer->outputs == Out->n);
+
+    /* Z = X@W + b */
+    matmul(X, layer->weights, Out);
+    for (int i = 0; i < Out->m; i++) {
+        vector_add(Out->d[i], layer->biases);
+    }
+
+    /* apply activation func */
+    matrix_apply(Out, layer->activation);
+}
+
 
 NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f) {
     assert(nlayers > 0);
@@ -89,4 +105,29 @@ Vector nn_forward(NN nn, Vector x) {
     }
 
     return x;
+}
+
+void nn_forward_batch(NN nn, Matrix X, Matrix O) {
+    assert(nn->layers[0]->inputs == X->n);
+    
+    Matrix temp1 = matrix_new_from_(X), temp2;
+
+    for (int i = 0; i < nn->nlayers; i++) {
+        Layer layer = nn->layers[i];
+
+        /* to store the result of the layer */
+        temp2 = matrix_new_(temp1->m, layer->outputs); 
+
+        layer_forward_batch(layer, temp1, temp2);
+
+        matrix_free(temp1);
+
+        temp1 = temp2;
+    }
+
+    matrix_copy(temp2, O);
+
+    matrix_free(temp2);
+
+    return;
 }

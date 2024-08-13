@@ -7,10 +7,14 @@
 
 float dotprod(Vector v, Vector w);
 
-void matrix_vector_mul(Matrix M, Vector v, Vector y);
+void matmul(Matrix A, Matrix B, Matrix C);
+
+void matvecmul(Matrix M, Vector v, Vector y);
 
 void vector_add(Vector v, Vector w);
 
 void vector_apply(Vector v, ActivationFunc f);
+
+void matrix_apply(Matrix M, ActivationFunc f);
 
 #endif

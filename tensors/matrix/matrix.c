@@ -69,6 +69,29 @@ Matrix matrix_from_vectors(int n, Vector* vectors, int axis) {
     return M;
 }
 
+Matrix matrix_new_from_(Matrix M) {
+    Matrix A = matrix_new_(M->m, M->n);
+    for (int i = 0; i < M->m; i++) {
+        for (int j = 0; j < M->n; j++) {
+            A->d[i]->d[j] = M->d[i]->d[j];
+        }
+    }
+    return A;
+}
+
+void matrix_copy(Matrix A, Matrix B) {
+    assert(A->m == B->m);
+    assert(A->n == B->n);
+
+    for (int i = 0; i < A->m; i++) {
+        for (int j = 0; j < A->n; j++) {
+            B->d[i]->d[j] = A->d[i]->d[j];
+        }
+    }
+
+    return;
+}
+
 void matrix_free(Matrix M) {
     for (int i = 0; i < M->m; i++) { vector_free(M->d[i]); }
     free(M->d); free(M);
@@ -84,7 +107,7 @@ void matrix_print(Matrix matrix) {
         if (i > 0) { printf(" "); }
 
         for (int j = 0; j < matrix->n; j++) {
-            printf(j == matrix->n - 1 ? "%04.1f" : "%04.1f ", row[j]);
+            printf(j == matrix->n - 1 ? "%04.3f" : "%04.3f ", row[j]);
         }
         puts(i == matrix->m - 1 ? "]" : "");
     }

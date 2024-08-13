@@ -21,6 +21,8 @@ void layer_free(Layer layer);
 
 void layer_forward(Layer layer, Vector x, Vector out);
 
+void layer_forward_batch(Layer layer, Matrix X, Matrix Out);
+
 struct NN_t {
     uint nlayers;
     Layer* layers;
@@ -34,5 +36,7 @@ NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f);
 void nn_free(NN nn); 
 
 Vector nn_forward(NN nn, Vector x);
+
+void nn_forward_batch(NN nn, Matrix X, Matrix Out);
 
 #endif

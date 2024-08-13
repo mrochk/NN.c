@@ -20,11 +20,24 @@ float dotprod(Vector v, Vector w) {
 }
 
 /* compute r = A@v where A is (m * n) and v is (n * 1) */
-void matrix_vector_mul(Matrix A, Vector v, Vector r) {
+void matvecmul(Matrix A, Vector v, Vector r) {
     assert(v->n == A->n); assert(r->n == A->m);
 
     for (int i = 0; i < A->m; i++) {
         r->d[i] = dotprod(v, A->d[i]);
+    }
+}
+
+/* compute C = A@B.T where A is (m * n) and B.T is (n * k) */
+void matmul(Matrix A, Matrix B, Matrix C) {
+    assert(A->n == B->n); 
+    assert(C->m == A->m);
+    assert(C->n == B->m);
+
+    for (int i = 0; i < C->m; i++) {
+        for (int j = 0; j < C->n; j++) {
+            C->d[i]->d[j] = dotprod(A->d[i], B->d[j]);
+        }
     }
 }
 
@@ -48,6 +61,12 @@ void vector_apply(Vector v, ActivationFunc f) {
             case Tanh:    assert(0 && "not impl");
             default:      assert(0 && "error");
         }
+    }
+}
+
+void matrix_apply(Matrix M, ActivationFunc f) {
+    for (int i = 0; i < M->m; i++) {
+        vector_apply(M->d[i], f);
     }
 }
 
