@@ -1,13 +1,13 @@
-#ifndef MLP_H
-#define MLP_H
+#ifndef NN_H
+#define NN_H
 
 #include "../../tensors/tensors.h"
 #include "../../activations/activations.h"
 #include "../../utils/utils.h"
 
 struct Layer_t {
-    int inputs;
-    int outputs;
+    uint inputs;
+    uint outputs;
     Matrix weights;
     Vector biases;
     ActivationFunc activation;
@@ -15,18 +15,24 @@ struct Layer_t {
 
 typedef struct Layer_t* Layer;
 
-Layer layer_new_(int inputs, int outputs, ActivationFunc activation);
+Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation);
 
 void layer_free(Layer layer);
 
-Vector layer_forward(Layer layer, Vector x, Vector r);
+void layer_forward(Layer layer, Vector x, Vector out);
 
 struct NN_t {
-    int inputs;
-    int outputs;
-    int hidden_layers;
+    uint nlayers;
+    Layer* layers;
+    ActivationFunc activation;
 };
 
 typedef struct NN_t* NN;
+
+NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f); 
+
+void nn_free(NN nn); 
+
+Vector nn_forward(NN nn, Vector x);
 
 #endif

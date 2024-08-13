@@ -4,15 +4,15 @@
 #include "../vector/vector.h"
 
 /* collection of vectors */
-typedef struct {
+struct Matrix_t {
     /* matrix dimensions */
     size_t m, n;
     /* matrix data (array of Vectors) */
     Vector* d;
-} Matrix_t;
+};
 
 /* collection of vectors */
-typedef Matrix_t* Matrix;
+typedef struct Matrix_t* Matrix;
 
 /* create a new matrix of size (m, n) not initialized with any value */
 Matrix matrix_new_(int m, int n);

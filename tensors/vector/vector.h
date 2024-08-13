@@ -2,15 +2,15 @@
 #define VECTOR_H
 
 /* vector of floats of dimension n */
-typedef struct {
+struct Vector_t {
     /* vector dimension */
     size_t n;
     /* vector data */
     float* d;
-} Vector_t;
+};
 
 /* vector of floats of dimension n */
-typedef Vector_t* Vector;
+typedef struct Vector_t* Vector;
 
 /* create a new vector of dimension n not initialized with any value */
 Vector vector_new_(int n);
@@ -28,7 +28,7 @@ Vector vector_new_randint_(int n, int high);
 void vector_free(Vector v);
 
 /* set all values of v to 0 */
-Vector vector_set_zeros(Vector v);
+void vector_set_zeros(Vector v);
 
 /* print a vector */
 void vector_print(Vector v);

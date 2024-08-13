@@ -6,7 +6,7 @@
 #include "../../utils/utils.h"
 
 Vector vector_new_(int n) {
-    Vector vector = (Vector) malloc(sizeof(Vector));
+    Vector vector = (Vector) malloc(sizeof(struct Vector_t));
     vector->n = n;
     vector->d = malloc(sizeof(float) * n);
 
@@ -39,13 +39,12 @@ Vector vector_new_randint_(int n, int high) {
 }
 
 void vector_free(Vector v) {
-    free(v->d); v->d = NULL;
-    free(v); v = NULL;
+    free(v->d);
+    free(v); 
 }
 
-Vector vector_set_zeros(Vector v) {
+void vector_set_zeros(Vector v) {
     for (int i = 0; i < v->n; i++) { v->d[i] = 0.F; }
-    return v;
 }
 
 void vector_print(Vector v) {

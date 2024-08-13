@@ -3,11 +3,14 @@
 
 #include "../vector/vector.h"
 #include "../matrix/matrix.h"
+#include "../../activations/activations.h"
 
 float dotprod(Vector v, Vector w);
 
-Vector vector_matrix_mul(Vector v, Matrix A, Vector r);
+void matrix_vector_mul(Matrix M, Vector v, Vector y);
 
-Vector vector_add(Vector v, Vector w, Vector r);
+void vector_add(Vector v, Vector w);
+
+void vector_apply(Vector v, ActivationFunc f);
 
 #endif

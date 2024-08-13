@@ -7,6 +7,12 @@
 
 #define PI acosf(-1.0F)
 
+typedef unsigned int uint;
+
+typedef struct { int a, b; } Pair;
+
+Pair pair(int a, int b);
+
 float randfloat();
 
 float randint(int high);

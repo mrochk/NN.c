@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "utils.h"
+
+/* create a new pair of ints */
+Pair pair(int a, int b) { Pair p = {a, b}; return p; }
+
 /* Random float between zero and one. */
 float randfloat() {
     float dividend = (float)rand();

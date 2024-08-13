@@ -4,12 +4,12 @@
 
 #include "nn.h"
 
-Layer layer_new_(int inputs, int outputs, ActivationFunc activation) {
-    Layer layer = (Layer) malloc(sizeof(Layer));
+Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation) {
+    assert(inputs > 0 && outputs > 0);
 
-    layer->inputs  = inputs;
-    layer->outputs = outputs;
+    Layer layer = (Layer) malloc(sizeof(struct Layer_t));
 
+    layer->inputs  = inputs, layer->outputs = outputs;
     layer->weights = matrix_new_randfloat_(outputs, inputs);
     layer->biases  = vector_new_randfloat_(outputs);
 
@@ -19,29 +19,74 @@ Layer layer_new_(int inputs, int outputs, ActivationFunc activation) {
 }
 
 void layer_free(Layer layer) {
+    assert(layer);
+
     matrix_free(layer->weights);
     vector_free(layer->biases);
-    free(layer); layer = NULL;
+    free(layer);
 }
 
-Vector layer_forward(Layer layer, Vector x, Vector r) {
-    assert(layer->outputs == r->n);
+/* computing f(x@W + b) with f being the chosen activation func */
+void layer_forward(Layer layer, Vector x, Vector out) {
     assert(layer->inputs  == x->n);
+    assert(layer->outputs == out->n);
 
     /* z = x@W + b */
-    vector_matrix_mul(x, layer->weights, r);
-    vector_add(r, layer->biases, r);
+    matrix_vector_mul(layer->weights, x, out);
+    vector_add(out, layer->biases);
 
     /* apply activation func */
-    for (int i = 0; i < layer->outputs; i++) {
-        switch (layer->activation) {
-            case ReLU:    r->d[i] = relu(r->d[i]); break;
-            case Sigmoid: r->d[i] = sigmoid(r->d[i]); break;
-            case Tanh:    assert(0 && "not implemented");
-            case Linear:  break;
-            default:      assert(0 && "error");
-        }
+    vector_apply(out, layer->activation);
+}
+
+NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f) {
+    assert(nlayers > 0);
+
+    NN nn = (NN) malloc(sizeof(struct NN_t));
+
+    nn->nlayers = nlayers, nn->activation = f;
+
+    nn->layers = (Layer*)malloc(sizeof(Layer) * nlayers);
+    for (int i = 0; i < nlayers; i++) {
+        int inputs  = structure[i].a, outputs = structure[i].b;
+
+        /* no activation function for last layer */
+        if (i == nlayers - 1) {
+            nn->layers[i] = layer_new_(inputs, outputs, Linear);
+        } else {
+            nn->layers[i] = layer_new_(inputs, outputs, f);
+        } 
     }
 
-    return r;
+    return nn;
+}
+
+void nn_free(NN nn) {
+    for (int i = 0; i < nn->nlayers; i++) {
+        layer_free(nn->layers[i]);
+    }
+    free(nn->layers);
+    free(nn);
+
+    return;
+}
+
+Vector nn_forward(NN nn, Vector x) {
+    assert(nn->layers[0]->inputs == x->n);
+
+    for (int i = 0; i < nn->nlayers; i++) {
+        Layer layer = nn->layers[i];
+
+        Vector temp = vector_new_(layer->outputs); 
+
+        layer_forward(layer, x, temp);
+
+        vector_print(x);
+
+        vector_free(x);
+
+        x = temp;
+    }
+
+    return x;
 }
