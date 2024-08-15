@@ -23,9 +23,9 @@ int main(int argc, char** argv) {
 
     Matrix X = matrix_new_randint_(1000, 5, 10);
 
-    Pair l1 = {5,  100};
-    Pair l2 = {100, 10};
-    Pair l3 = {10, 3};
+    Pair l1 = {5U,  10U};
+    Pair l2 = {10U, 10U};
+    Pair l3 = {10U,  3U};
 
     Pair arch[] = {l1, l2, l3};
 
