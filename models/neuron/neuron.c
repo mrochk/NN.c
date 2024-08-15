@@ -35,7 +35,7 @@ float neuron_forward(Neuron n, Vector x) {
     float z = dotprod(x, n->w) + n->b;
 
     switch (n->activation) {
-        case Linear:  return z;
+        case Identity:  return z;
         case Sigmoid: return sigmoid(z);
         case ReLU:    return relu(z);
         default:      assert(0);

@@ -51,7 +51,7 @@ void neurons_run_eg(int iters) {
     /*** initialize the neurons ***/
     Neuron nh1 = neuron_new_(n_features, ReLU); /* hidden neuron 1 */
     Neuron nh2 = neuron_new_(n_features, ReLU); /* hidden neuron 2 */
-    Neuron no  = neuron_new_(2, Linear);        /* output neuron   */
+    Neuron no  = neuron_new_(2, Identity);        /* output neuron   */
 
     /*** perform initial predictions ***/
 	Vector predictions = vector_new_zeros_(datapoints);

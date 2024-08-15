@@ -68,7 +68,7 @@ NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f) {
 
         /* no activation function for last layer */
         if (i == nlayers - 1) {
-            nn->layers[i] = layer_new_(inputs, outputs, Linear);
+            nn->layers[i] = layer_new_(inputs, outputs, Identity);
         } else {
             nn->layers[i] = layer_new_(inputs, outputs, f);
         } 

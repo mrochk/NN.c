@@ -51,14 +51,14 @@ void vector_add(Vector v, Vector w) {
 }
 
 void vector_apply(Vector v, ActivationFunc f) {
-    if (f == Linear) { return; }
+    if (f == Identity) { return; }
 
     for (int i = 0; i < v->n; i++) {
         float x = v->d[i];
         switch (f) {
             case Sigmoid: v->d[i] = sigmoid(x); break;
             case ReLU:    v->d[i] = relu(x);    break;
-            case Tanh:    assert(0 && "not impl");
+            case TanH:    assert(0 && "not impl");
             default:      assert(0 && "error");
         }
     }
