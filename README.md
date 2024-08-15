@@ -1,4 +1,4 @@
-# nn.c
+# NN.c
 Feedforward neural network & other ML models implemented from scratch in pure C.
 
 Models implemented:
