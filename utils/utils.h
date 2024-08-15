@@ -9,7 +9,7 @@
 
 typedef unsigned int uint;
 
-typedef struct { int a, b; } Pair;
+typedef struct { uint a, b; } Pair;
 
 Pair pair(int a, int b);
 

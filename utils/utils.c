@@ -4,14 +4,14 @@
 
 #include "utils.h"
 
-/* create a new pair of ints */
-Pair pair(int a, int b) { Pair p = {a, b}; return p; }
+/* create a new pair of uints */
+Pair pair(int a, int b) { return (Pair){a, b}; }
 
-/* Random float between zero and one. */
+/* Random float in [-1, 1]. */
 float randfloat() {
-    float dividend = (float)rand();
-    float divisor  = (float)RAND_MAX;
-    return dividend / divisor;
+    float a = (float) rand();
+    float b = (float) RAND_MAX ;
+    return a / b * 2.F - 1.F;
 }
 
 /* Random integer casted to float in range [0, high]. */

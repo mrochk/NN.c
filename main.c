@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 
     nn_forward_batch(nn, X, Out);
 
-    //matrix_apply(Out, );
+    matrix_apply(Out, Sigmoid);
 
     matrix_print(Out);
 
