@@ -17,4 +17,7 @@ void vector_apply(Vector v, ActivationFunc f);
 
 void matrix_apply(Matrix M, ActivationFunc f);
 
+/* forall i, M[i] = M[i] + v, where |v| = |M[i]| */
+matrix_add_vector(Matrix M, Vector v);
+
 #endif

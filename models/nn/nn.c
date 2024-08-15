@@ -4,10 +4,12 @@
 
 #include "nn.h"
 
-Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation) {
-    assert(inputs > 0 && outputs > 0);
+/**** layer *******************************************************************/
 
-    Layer layer = (Layer) malloc(sizeof(struct Layer_t));
+Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation) {
+    assert(inputs > 0); assert(outputs > 0);
+
+    Layer layer = (Layer)malloc(sizeof(struct Layer_t));
 
     layer->inputs  = inputs, layer->outputs = outputs;
     layer->weights = matrix_new_randfloat_(outputs, inputs);
@@ -24,10 +26,13 @@ void layer_free(Layer layer) {
     matrix_free(layer->weights);
     vector_free(layer->biases);
     free(layer);
+
+    return;
 }
 
 /* computing f(x@W + b) with f being the chosen activation func */
 void layer_forward(Layer layer, Vector x, Vector out) {
+    assert(layer); assert(x); assert(out);
     assert(layer->inputs  == x->n);
     assert(layer->outputs == out->n);
 
@@ -37,23 +42,25 @@ void layer_forward(Layer layer, Vector x, Vector out) {
 
     /* apply activation func */
     vector_apply(out, layer->activation);
+
+    return;
 }
 
 /* computing f(X@W + b) with f being the chosen activation func */
-void layer_forward_batch(Layer layer, Matrix X, Matrix Out) {
+void layer_forward_batch(Layer layer, Matrix X, Matrix Z) {
+    assert(layer); assert(X); assert(Z);
     assert(layer->inputs  == X->n);
-    assert(layer->outputs == Out->n);
+    assert(X->m == Z->m); assert(layer->outputs == Z->n);
 
-    /* Z = X@W + b */
-    matmul(X, layer->weights, Out);
-    for (int i = 0; i < Out->m; i++) {
-        vector_add(Out->d[i], layer->biases);
-    }
+    /* compute the linear combination Z = X@W + b */
+    matmul(X, layer->weights, Z);
+    matrix_add_vector(Z, layer->biases);
 
-    /* apply activation func */
-    matrix_apply(Out, layer->activation);
+    /* apply activation function */
+    matrix_apply(Z, layer->activation);
 }
 
+/**** nn **********************************************************************/
 
 NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f) {
     assert(nlayers > 0);
@@ -78,9 +85,9 @@ NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f) {
 }
 
 void nn_free(NN nn) {
-    for (int i = 0; i < nn->nlayers; i++) {
-        layer_free(nn->layers[i]);
-    }
+    assert(nn);
+
+    for (int i = 0; i < nn->nlayers; i++) { layer_free(nn->layers[i]); }
     free(nn->layers);
     free(nn);
 
@@ -88,6 +95,7 @@ void nn_free(NN nn) {
 }
 
 Vector nn_forward(NN nn, Vector x) {
+    assert(nn); assert(x);
     assert(nn->layers[0]->inputs == x->n);
 
     for (int i = 0; i < nn->nlayers; i++) {
@@ -108,7 +116,10 @@ Vector nn_forward(NN nn, Vector x) {
 }
 
 void nn_forward_batch(NN nn, Matrix X, Matrix O) {
+    assert(nn); assert(X); assert(O);
     assert(nn->layers[0]->inputs == X->n);
+    assert(nn->layers[nn->nlayers-1]->outputs == O->n);
+    assert(X->m == O->m);
     
     Matrix temp1 = matrix_new_from_(X), temp2;
 

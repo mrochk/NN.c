@@ -26,6 +26,8 @@ void matvecmul(Matrix A, Vector v, Vector r) {
     for (int i = 0; i < A->m; i++) {
         r->d[i] = dotprod(v, A->d[i]);
     }
+
+    return;
 }
 
 /* compute C = A@B.T where A is (m * n) and B.T is (n * k) */
@@ -39,6 +41,8 @@ void matmul(Matrix A, Matrix B, Matrix C) {
             C->d[i]->d[j] = dotprod(A->d[i], B->d[j]);
         }
     }
+    
+    return;
 }
 
 /* compute v + w where dim(v) = dim(w), store the result in v */
@@ -48,6 +52,8 @@ void vector_add(Vector v, Vector w) {
     for (int i = 0; i < v->n; i++) {
         v->d[i] = v->d[i] + w->d[i];
     }
+
+    return;
 }
 
 void vector_apply(Vector v, ActivationFunc f) {
@@ -62,11 +68,25 @@ void vector_apply(Vector v, ActivationFunc f) {
             default:      assert(0 && "error");
         }
     }
+
+    return;
 }
 
 void matrix_apply(Matrix M, ActivationFunc f) {
     for (int i = 0; i < M->m; i++) {
         vector_apply(M->d[i], f);
     }
+
+    return;
+}
+
+/* forall i, M[i] = M[i] + v, where |v| = |M[i]| */
+matrix_add_vector(Matrix M, Vector v) {
+    assert(M); assert(v);
+    assert(M->n == v->n);
+
+    for (int i = 0; i < M->m; i++) { vector_add(M->d[i], v); }
+
+    return;
 }
 
