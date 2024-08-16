@@ -13,9 +13,9 @@ void matvecmul(Matrix M, Vector v, Vector y);
 
 void vector_add(Vector v, Vector w);
 
-void vector_apply(Vector v, ActivationFunc f);
+void vector_apply(Vector v, Activation f);
 
-void matrix_apply(Matrix M, ActivationFunc f);
+void matrix_apply(Matrix M, Activation f);
 
 /* forall i, M[i] = M[i] + v, where |v| = |M[i]| */
 void matrix_add_vector(Matrix M, Vector v);

@@ -7,12 +7,12 @@
 /**** layer *******************************************************************/
 
 /* create a new feedforward nn layer */
-Layer layer_new_(uint inputs, uint outputs, ActivationFunc activ) {
+Layer layer_new_(uint inputs, uint outputs, Activation f) {
     assert(inputs > 0); assert(outputs > 0);
 
     Layer layer = (Layer)malloc(sizeof(struct Layer_t));
 
-    layer->activation = activ, layer->inputs = inputs, layer->outputs = outputs;
+    layer->activation = f, layer->inputs = inputs, layer->outputs = outputs;
     layer->weights = matrix_new_randfloat_(outputs, inputs);
     layer->biases  = vector_new_randfloat_(outputs);
 
@@ -65,7 +65,7 @@ void layer_forward_batch(Layer layer, Matrix X, Matrix Z) {
 /**** nn **********************************************************************/
 
 /* create a new feedforward neural network */
-NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f) {
+NN nn_new_(uint nlayers, Pair* structure, Activation f) {
     assert(nlayers > 0);
 
     NN nn = (NN)malloc(sizeof(struct NN_t));

@@ -3,7 +3,7 @@
 
 /* activation functions to choose from */
 typedef enum {
-    /* no activation function (linear) */
+    /* no activation function */
     Identity, 
     /* relu activation function */
     ReLU, 
@@ -11,7 +11,7 @@ typedef enum {
     Sigmoid, 
     /* tanh activation function */
     TanH,
-} ActivationFunc;
+} Activation;
 
 /* relu activation function */
 float relu(float x);

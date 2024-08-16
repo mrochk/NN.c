@@ -8,12 +8,12 @@
 struct Neuron_t {
     Vector w; /* weights */
     float  b; /* bias */
-    ActivationFunc activation; /* activation function */
+    Activation activation; /* activation function */
 };
 
 typedef struct Neuron_t* Neuron; 
 
-Neuron neuron_new_(int n_inputs, ActivationFunc activation);
+Neuron neuron_new_(int n_inputs, Activation activation);
 
 void neuron_free(Neuron n);
 

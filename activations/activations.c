@@ -6,10 +6,6 @@
 
 #include "activations.h"
 
-float relu(float x) {
-    return maxf(x, 0.0f);
-}
+float relu(float x) { return maxf(x, 0.0f); }
 
-float sigmoid(float x) {
-    return 1.0f / (1.0f + exp(-x));
-}
+float sigmoid(float x) { return 1.0f / (1.0f + exp(-x)); }

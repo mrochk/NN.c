@@ -9,7 +9,7 @@
 
 #include "neuron.h"
 
-Neuron neuron_new_(int n_inputs, ActivationFunc activation) {
+Neuron neuron_new_(int n_inputs, Activation activation) {
     Neuron neuron = (Neuron) malloc(sizeof(Neuron));
     neuron->w = vector_new_randfloat_(n_inputs);
     neuron->b = randfloat();

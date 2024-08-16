@@ -51,7 +51,7 @@ void vector_add(Vector v, Vector w) {
 }
 
 /* v_i = f(v_i) for all v_i in v (inplace op) */
-void vector_apply(Vector v, ActivationFunc f) {
+void vector_apply(Vector v, Activation f) {
     if (f == Identity) { return; }
 
     for (int i = 0; i < v->n; i++) {
@@ -78,7 +78,7 @@ void vector_apply(Vector v, ActivationFunc f) {
 }
 
 /* m_{i,j} = f(m_{i,j}) for all m_{i,j} in M (inplace op) */
-void matrix_apply(Matrix M, ActivationFunc f) {
+void matrix_apply(Matrix M, Activation f) {
     assert(M);
 
     for (int i = 0; i < M->m; i++) { vector_apply(M->d[i], f); }

@@ -10,12 +10,12 @@ struct Layer_t {
     uint outputs;
     Matrix weights;
     Vector biases;
-    ActivationFunc activation;
+    Activation activation;
 };
 
 typedef struct Layer_t* Layer;
 
-Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation);
+Layer layer_new_(uint inputs, uint outputs, Activation activation);
 
 void layer_free(Layer layer);
 
@@ -26,12 +26,12 @@ void layer_forward_batch(Layer layer, Matrix X, Matrix Out);
 struct NN_t {
     uint nlayers;
     Layer* layers;
-    ActivationFunc activation;
+    Activation activation;
 };
 
 typedef struct NN_t* NN;
 
-NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f); 
+NN nn_new_(uint nlayers, Pair* structure, Activation f); 
 
 void nn_free(NN nn); 
 
