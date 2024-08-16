@@ -19,7 +19,7 @@ float dotprod(Vector v, Vector w) {
     return dot;
 }
 
-/* compute r = A@v where A is (m * n) and v is (n * 1) */
+/* compute y = A@v where A is (m * n) and v is (n * 1) */
 void matvecmul(Matrix A, Vector v, Vector r) {
     assert(v->n == A->n); assert(r->n == A->m);
 
@@ -81,7 +81,7 @@ void matrix_apply(Matrix M, ActivationFunc f) {
 }
 
 /* forall i, M[i] = M[i] + v, where |v| = |M[i]| */
-matrix_add_vector(Matrix M, Vector v) {
+void matrix_add_vector(Matrix M, Vector v) {
     assert(M); assert(v);
     assert(M->n == v->n);
 

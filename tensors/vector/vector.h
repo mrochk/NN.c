@@ -3,9 +3,9 @@
 
 /* vector of floats of dimension n */
 struct Vector_t {
-    /* vector dimension */
-    size_t n;
-    /* vector data */
+    /* dimension */
+    uint n;
+    /* data */
     float* d;
 };
 
@@ -13,16 +13,21 @@ struct Vector_t {
 typedef struct Vector_t* Vector;
 
 /* create a new vector of dimension n not initialized with any value */
-Vector vector_new_(int n);
+Vector vector_new_(uint n);
 
 /* create a new vector of dimension n filled with zeros */
-Vector vector_new_zeros_(int n);
+Vector vector_new_zeros_(uint n);
 
 /* create a new vector of dimension n filled with random floats in [0, 1] */
-Vector vector_new_randfloat_(int n);
+Vector vector_new_randfloat_(uint n);
 
 /* create a new vector of dimension n filled with random ints in [0, high] */
-Vector vector_new_randint_(int n, int high);
+Vector vector_new_randint_(uint n, int high);
+
+Vector vector_new_from_(Vector v);
+
+/* compute v := w */
+void vector_copy(Vector v, Vector w);
 
 /* free a vector allocated with new_..._vector_ */
 void vector_free(Vector v);

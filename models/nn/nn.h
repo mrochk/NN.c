@@ -35,7 +35,7 @@ NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f);
 
 void nn_free(NN nn); 
 
-Vector nn_forward(NN nn, Vector x);
+void nn_forward(NN nn, Vector x, Vector o);
 
 void nn_forward_batch(NN nn, Matrix X, Matrix Out);
 

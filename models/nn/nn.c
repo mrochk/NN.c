@@ -6,6 +6,7 @@
 
 /**** layer *******************************************************************/
 
+/* create a new feedforward nn layer */
 Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation) {
     assert(inputs > 0); assert(outputs > 0);
 
@@ -20,6 +21,7 @@ Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation) {
     return layer;
 }
 
+/* free the memory allocated to a layer */
 void layer_free(Layer layer) {
     assert(layer);
 
@@ -30,18 +32,18 @@ void layer_free(Layer layer) {
     return;
 }
 
-/* computing f(x@W + b) with f being the chosen activation func */
-void layer_forward(Layer layer, Vector x, Vector out) {
-    assert(layer); assert(x); assert(out);
+/* computing z = f(x@W + b) with f being the chosen activation func */
+void layer_forward(Layer layer, Vector x, Vector z) {
+    assert(layer); assert(x); assert(z);
     assert(layer->inputs  == x->n);
-    assert(layer->outputs == out->n);
+    assert(layer->outputs == z->n);
 
     /* z = x@W + b */
-    matvecmul(layer->weights, x, out);
-    vector_add(out, layer->biases);
+    matvecmul(layer->weights, x, z);
+    vector_add(z, layer->biases);
 
     /* apply activation func */
-    vector_apply(out, layer->activation);
+    vector_apply(z, layer->activation);
 
     return;
 }
@@ -58,32 +60,37 @@ void layer_forward_batch(Layer layer, Matrix X, Matrix Z) {
 
     /* apply activation function */
     matrix_apply(Z, layer->activation);
+
+    return;
 }
 
 /**** nn **********************************************************************/
 
+/* create a new feedforward neural network */
 NN nn_new_(uint nlayers, Pair* structure, ActivationFunc f) {
     assert(nlayers > 0);
 
-    NN nn = (NN) malloc(sizeof(struct NN_t));
+    NN nn = (NN)malloc(sizeof(struct NN_t));
 
     nn->nlayers = nlayers, nn->activation = f;
 
     nn->layers = (Layer*)malloc(sizeof(Layer) * nlayers);
     for (int i = 0; i < nlayers; i++) {
-        int inputs  = structure[i].a, outputs = structure[i].b;
+        int inputs = structure[i].a, outputs = structure[i].b;
 
         /* no activation function for last layer */
         if (i == nlayers - 1) {
             nn->layers[i] = layer_new_(inputs, outputs, Identity);
-        } else {
-            nn->layers[i] = layer_new_(inputs, outputs, f);
-        } 
+            continue;
+        }
+
+        nn->layers[i] = layer_new_(inputs, outputs, f);
     }
 
     return nn;
 }
 
+/* free the memory allocated to NN */
 void nn_free(NN nn) {
     assert(nn);
 
@@ -94,25 +101,28 @@ void nn_free(NN nn) {
     return;
 }
 
-Vector nn_forward(NN nn, Vector x) {
+void nn_forward(NN nn, Vector x, Vector o) {
     assert(nn); assert(x);
     assert(nn->layers[0]->inputs == x->n);
+    assert(nn->layers[nn->nlayers-1]->outputs == o->n);
+
+    Vector temp1 = vector_new_from_(x);
 
     for (int i = 0; i < nn->nlayers; i++) {
         Layer layer = nn->layers[i];
 
-        Vector temp = vector_new_(layer->outputs); 
+        Vector temp2 = vector_new_zeros_(layer->weights->m);
 
-        layer_forward(layer, x, temp);
+        matvecmul(layer->weights, temp1, temp2);
 
-        vector_print(x);
+        vector_free(temp1);
 
-        vector_free(x);
-
-        x = temp;
+        temp1 = temp2;
     }
 
-    return x;
+    vector_copy(o, temp1);
+
+    vector_free(temp1);
 }
 
 void nn_forward_batch(NN nn, Matrix X, Matrix O) {
