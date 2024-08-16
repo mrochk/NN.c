@@ -9,7 +9,7 @@
 
 #include "../../models/nn/nn.h"
 
-#define N_SAMPLES 1000
+#define N_SAMPLES 200
 
 void compute_gradients(NN nn) {
     
@@ -36,10 +36,10 @@ void neuralnet_run_eg(int iters) {
     /*** init model ***/
 
     Pair arch[] = { 
-        pair(3, 20), 
-        pair(20, 20), 
-        pair(20, 20), 
-        pair(20, 1)
+        pair(3,  10), 
+        pair(10, 10), 
+        pair(10, 10), 
+        pair(10, 1)
     };
 
     NN nn = nn_new_(4, arch, ReLU);
@@ -59,23 +59,28 @@ void neuralnet_run_eg(int iters) {
 
     /*** training loop ***/
 
-    float loss = 0.F;
-    float eps = 0.00001F;
-    float lr = 0.005F;
+    float loss;
+
+    float lr = 0.01F; /* learning rate */
+
+    float eps = 0.000001F; /* constant term in symmetric derivative approx */
 
     for (int iter = 0; iter < iters; iter++) {
-        /* forward */
+
+        /*** forward ***/
+
         nn_forward_batch(nn, X, P); vector_copy_matrix(preds, P);
 
         loss = MSE(preds, y);
         printf("-/ iter %d, loss: %.2f\n", iter+1, loss);
 
-        /* backward */
+        /*** backward ***/
 
         Matrix dws[nn->nlayers];
         Vector dbs[nn->nlayers];
 
         /* compute grads */
+
         for (int l = 0; l < nn->nlayers; l++) {
             Layer layer = nn->layers[l];
 
@@ -87,25 +92,47 @@ void neuralnet_run_eg(int iters) {
 
             for (int i = 0; i < b->n; i++) {
                 b->d[i] += eps;
+
                 nn_forward_batch(nn, X, P); vector_copy_matrix(preds, P);
-                float temploss = MSE(preds, y);
-                db->d[i] = (temploss - loss) / eps;
+                float temploss_plus = MSE(preds, y);
+
                 b->d[i] -= eps;
+                b->d[i] -= eps;
+
+                nn_forward_batch(nn, X, P); vector_copy_matrix(preds, P);
+                float temploss_minus = MSE(preds, y);
+
+                b->d[i] += eps;
+
+                db->d[i] = (temploss_plus - temploss_minus) / (2.f*eps);
             }
+
+            // [f(x - h) - f(x + h)] / 2h
 
             for (int i = 0; i < W->m; i++) {
                 for (int j = 0; j < W->n; j++) {
                     dw->d[i]->d[j] += eps;
+
                     nn_forward_batch(nn, X, P); vector_copy_matrix(preds, P);
-                    float temploss = MSE(preds, y);
-                    dw->d[i]->d[j] = (temploss - loss) / eps;
+                    float temploss_plus = MSE(preds, y);
+
                     dw->d[i]->d[j] -= eps;
+                    dw->d[i]->d[j] -= eps;
+
+                    nn_forward_batch(nn, X, P); vector_copy_matrix(preds, P);
+                    float temploss_minus = MSE(preds, y);
+
+                    dw->d[i]->d[j] += eps;
+
+                    dw->d[i]->d[j] = (temploss_plus - temploss_minus) / (2.f*eps);
                 }
             }
 
             dws[l] = dw;
             dbs[l] = db;
         }
+
+        /* update parameters */
 
         for (int l = 0; l < nn->nlayers; l++) {
             Layer layer = nn->layers[l];
@@ -128,8 +155,7 @@ void neuralnet_run_eg(int iters) {
         }
 
         for (int l = 0; l < nn->nlayers; l++) {
-            matrix_free(dws[l]);
-            vector_free(dbs[l]);
+            matrix_free(dws[l]); vector_free(dbs[l]);
         }
     }
 
