@@ -9,11 +9,18 @@
 
 #include "../../models/nn/nn.h"
 
-void neuralnet_run_eg(int iters) {
-    /*** create synthetic data using f(x, y, z) = sin(x) + sin(2y) + z ***/
-    Matrix X = matrix_new_randfloat_(100, 3);
+#define N_SAMPLES 1000
 
-    Vector y = vector_new_(100);
+void compute_gradients(NN nn) {
+    
+}
+
+void neuralnet_run_eg(int iters) {
+
+    /*** create synthetic data using f(x, y, z) = sin(x) + sin(2y) + z ***/
+    Matrix X = matrix_new_randfloat_(N_SAMPLES, 3);
+
+    Vector y = vector_new_(N_SAMPLES);
     for (int i = 0; i < y->n; i++) {
         Vector row = X->d[i];
         float x1 = row->d[0], x2 = row->d[1], x3 = row->d[2];
@@ -28,14 +35,19 @@ void neuralnet_run_eg(int iters) {
 
     /*** init model ***/
 
-    Pair arch[] = {pair(3, 10), pair(10, 10), pair(10, 1)};
+    Pair arch[] = { 
+        pair(3, 20), 
+        pair(20, 20), 
+        pair(20, 20), 
+        pair(20, 1)
+    };
 
-    NN nn = nn_new_(3, arch, ReLU);
+    NN nn = nn_new_(4, arch, ReLU);
 
     /*** initial preds ***/
 
-    Vector preds = vector_new_(100);
-    Matrix P = matrix_new_(100, 1);
+    Vector preds = vector_new_(N_SAMPLES);
+    Matrix P = matrix_new_(N_SAMPLES, 1);
 
     nn_forward_batch(nn, X, P); vector_copy_matrix(preds, P);
 
@@ -49,14 +61,14 @@ void neuralnet_run_eg(int iters) {
 
     float loss = 0.F;
     float eps = 0.00001F;
-    float lr = 0.001F;
+    float lr = 0.005F;
 
     for (int iter = 0; iter < iters; iter++) {
         /* forward */
         nn_forward_batch(nn, X, P); vector_copy_matrix(preds, P);
 
         loss = MSE(preds, y);
-        printf("-/ iter %d, loss: %.2f\n", iter, loss);
+        printf("-/ iter %d, loss: %.2f\n", iter+1, loss);
 
         /* backward */
 
@@ -126,6 +138,13 @@ void neuralnet_run_eg(int iters) {
     printf("\ninitial loss: %.8f\n", init_loss);
     printf("final loss:   %.8f\n", loss);
 
+    puts("final preds:");
+    vector_print(preds);
+
+    puts("targets:");
+    vector_print(y);
+
     matrix_free(X); matrix_free(P);
     vector_free(y); vector_free(preds);
+    nn_free(nn);
 }

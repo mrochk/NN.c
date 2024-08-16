@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     //polreg_run_eg(ITERS_DEFAULT);
     //neurons_run_eg(ITERS_DEFAULT);
 
-    neuralnet_run_eg(100);
+    neuralnet_run_eg(1000);
 
     return EXIT_SUCCESS;
 }
