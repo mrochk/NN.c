@@ -7,16 +7,14 @@
 /**** layer *******************************************************************/
 
 /* create a new feedforward nn layer */
-Layer layer_new_(uint inputs, uint outputs, ActivationFunc activation) {
+Layer layer_new_(uint inputs, uint outputs, ActivationFunc activ) {
     assert(inputs > 0); assert(outputs > 0);
 
     Layer layer = (Layer)malloc(sizeof(struct Layer_t));
 
-    layer->inputs  = inputs, layer->outputs = outputs;
+    layer->activation = activ, layer->inputs = inputs, layer->outputs = outputs;
     layer->weights = matrix_new_randfloat_(outputs, inputs);
     layer->biases  = vector_new_randfloat_(outputs);
-
-    layer->activation = activation;
 
     return layer;
 }
@@ -101,6 +99,7 @@ void nn_free(NN nn) {
     return;
 }
 
+/* compute a prediction for a single sample */
 void nn_forward(NN nn, Vector x, Vector o) {
     assert(nn); assert(x);
     assert(nn->layers[0]->inputs == x->n);
@@ -125,6 +124,7 @@ void nn_forward(NN nn, Vector x, Vector o) {
     vector_free(temp1);
 }
 
+/* compute predictions for a batch */
 void nn_forward_batch(NN nn, Matrix X, Matrix O) {
     assert(nn); assert(X); assert(O);
     assert(nn->layers[0]->inputs == X->n);
