@@ -95,3 +95,23 @@ void matrix_add_vector(Matrix M, Vector v) {
     return;
 }
 
+/* if M is (1 x n) or (m x 1), copy M into v */
+void vector_copy_matrix(Vector v, Matrix M) {
+    assert(M); assert(v);
+    assert(M->m == 1 || M->n == 1);
+
+    if (M->m == 1) {
+        assert(M->n == v->n);
+
+        vector_copy(v, M->d[0]);
+
+        return;
+    }
+
+    // else
+    assert(M->m == v->n);
+
+    for (int i = 0; i < M->m; i++) { v->d[i] = M->d[i]->d[0]; }
+
+    return;
+}

@@ -107,7 +107,11 @@ void matrix_print(Matrix matrix) {
         if (i > 0) { printf(" "); }
 
         for (int j = 0; j < matrix->n; j++) {
-            printf(j == matrix->n - 1 ? "%04.3f" : "%04.3f ", row[j]);
+            if (row[j] > 0) {
+                printf(j == matrix->n - 1 ? "+%04.2f" : "+%04.2f ", row[j]);
+            } else {
+                printf(j == matrix->n - 1 ? "%04.2f" : "%04.2f ", row[j]);
+            }
         }
         puts(i == matrix->m - 1 ? "]" : "");
     }

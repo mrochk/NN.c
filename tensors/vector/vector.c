@@ -4,6 +4,7 @@
 #include <assert.h>
 
 #include "../../utils/utils.h"
+#include "../matrix/matrix.h"
 
 #include "vector.h"
 

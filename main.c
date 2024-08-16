@@ -10,13 +10,13 @@
 #define ITERS_DEFAULT 50
 
 int main(int argc, char** argv) {
-    srand(time(NULL));
+    srand(time(NULL)); /* set random seed here if needed */
 
     //linreg_run_eg(ITERS_DEFAULT);
     //polreg_run_eg(ITERS_DEFAULT);
     //neurons_run_eg(ITERS_DEFAULT);
 
-    neuralnet_run_eg(1);
+    neuralnet_run_eg(100);
 
     return EXIT_SUCCESS;
 }

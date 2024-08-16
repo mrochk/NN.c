@@ -1,3 +1,5 @@
 # Feedforward Neural Network Example
 
-Here, a small neural network made of 3 neurons attempts to learn $f(x, y) = \sin(x) + \frac{y^2}{10}$. 
+Here, a small neural network made of 3 neurons attempts to learn $f(x, y, z) = \sin(x) + \sin(2y) + z$. 
+
+Gradients are computed via an approximation of the symmetric derivative $\frac{f(x+h) - f(x-h)}{2h}$ for a small $h$ named `eps` in the code.

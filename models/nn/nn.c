@@ -65,7 +65,7 @@ void layer_forward_batch(Layer layer, Matrix X, Matrix Z) {
 /**** nn **********************************************************************/
 
 /* create a new feedforward neural network */
-NN nn_new_(uint nlayers, Pair* structure, Activation f) {
+NN nn_new_(uint nlayers, Pair* arch, Activation f) {
     assert(nlayers > 0);
 
     NN nn = (NN)malloc(sizeof(struct NN_t));
@@ -74,7 +74,7 @@ NN nn_new_(uint nlayers, Pair* structure, Activation f) {
 
     nn->layers = (Layer*)malloc(sizeof(Layer) * nlayers);
     for (int i = 0; i < nlayers; i++) {
-        int inputs = structure[i].a, outputs = structure[i].b;
+        int inputs = arch[i].a, outputs = arch[i].b;
 
         /* no activation function for last layer */
         if (i == nlayers - 1) {

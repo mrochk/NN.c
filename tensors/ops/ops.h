@@ -20,4 +20,6 @@ void matrix_apply(Matrix M, Activation f);
 /* forall i, M[i] = M[i] + v, where |v| = |M[i]| */
 void matrix_add_vector(Matrix M, Vector v);
 
+void vector_copy_matrix(Vector v, Matrix M);
+
 #endif
