@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "examples/linreg/example.c"
-#include "examples/polreg/example.c"
-#include "examples/neurons/example.c"
+//#include "examples/linreg/example.c"
+//#include "examples/polreg/example.c"
+//#include "examples/neurons/example.c"
 #include "examples/nn/example.c"
 
-#define ITERS_DEFAULT 500
+#define ITERS_DEFAULT 50
 
 int main(int argc, char** argv) {
     srand(time(NULL)); /* set random seed here if needed */
