@@ -100,14 +100,14 @@ void neuralnet_run_eg(int iters) {
 
     const uint nlayers = 4;
 
-    Pair arch[] = { 
+    UintPair arch[] = { 
         pair(3,  10), 
         pair(10, 10), 
         pair(10, 10), 
         pair(10, 1)
     };
 
-    NN nn = nn_new_(nlayers, arch, Tanh);
+    NN nn = nn_new_(nlayers, arch, ReLU);
 
     /*** initial preds ***/
 

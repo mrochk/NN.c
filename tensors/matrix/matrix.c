@@ -42,7 +42,7 @@ Matrix matrix_new_randint_(int m, int n, int hi) {
     return matrix;
 }
 
-Matrix matrix_from_vectors(int n, Vector* vectors, int axis) {
+Matrix matrix_new_from_vectors_(int n, Vector* vectors, int axis) {
     assert(n > 0); assert(axis == 0 || axis == 1);
 
     size_t len = vectors[0]->n;
@@ -76,7 +76,15 @@ Matrix matrix_new_from_(Matrix M) {
             A->d[i]->d[j] = M->d[i]->d[j];
         }
     }
+
     return A;
+}
+
+void matrix_free(Matrix M) {
+    for (int i = 0; i < M->m; i++) { vector_free(M->d[i]); }
+    free(M->d); free(M);
+
+    return;
 }
 
 void matrix_copy(Matrix A, Matrix B) {
@@ -88,13 +96,6 @@ void matrix_copy(Matrix A, Matrix B) {
             B->d[i]->d[j] = A->d[i]->d[j];
         }
     }
-
-    return;
-}
-
-void matrix_free(Matrix M) {
-    for (int i = 0; i < M->m; i++) { vector_free(M->d[i]); }
-    free(M->d); free(M);
 
     return;
 }

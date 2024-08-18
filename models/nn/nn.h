@@ -33,7 +33,7 @@ struct NN_t {
 
 typedef struct NN_t* NN;
 
-NN nn_new_(uint nlayers, Pair* structure, Activation f); 
+NN nn_new_(uint nlayers, UintPair* arch, Activation f); 
 
 void nn_free(NN nn); 
 

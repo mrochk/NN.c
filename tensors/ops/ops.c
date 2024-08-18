@@ -11,7 +11,7 @@
 float dotprod(Vector v, Vector w) {
     assert(v->n == w->n);
 
-    float dot = 0.0f;
+    float dot = 0.F;
     for (int i = 0; i < v->n; i++) { dot += v->d[i] * w->d[i]; }
 
     return dot;
@@ -26,8 +26,9 @@ void matvecmul(Matrix A, Vector v, Vector r) {
     return;
 }
 
-/* compute C = A@B.T where A is (m * n) and B.T is (n * k) */
+/* compute C = A@(B^T) where A is (m x n) and B is (k x n) */
 void matmul(Matrix A, Matrix B, Matrix C) {
+    assert(A); assert(B); assert(C);
     assert(A->n == B->n); 
     assert(C->m == A->m); 
     assert(C->n == B->m);
@@ -41,7 +42,7 @@ void matmul(Matrix A, Matrix B, Matrix C) {
     return;
 }
 
-/* compute v + w where dim(v) = dim(w), store the result in v */
+/* compute v = v + w where dim(v) = dim(w) */
 void vector_add(Vector v, Vector w) {
     assert(v); assert(w);
     assert(v->n == w->n);
@@ -51,35 +52,34 @@ void vector_add(Vector v, Vector w) {
     return;
 }
 
-/* v_i = f(v_i) for all v_i in v (inplace op) */
+/* compute v = f(v) (v_i = f(v_i) for all v_i in v) */
 void vector_apply(Vector v, Activation f) {
     if (f == Identity) { return; }
 
     for (int i = 0; i < v->n; i++) {
         float x = v->d[i];
-
         switch (f) {
-            case Sigmoid: 
-                v->d[i] = sigmoid(x); 
-                break;
+        case Sigmoid: 
+            v->d[i] = sigmoid(x); 
+            break;
 
-            case ReLU: 
-                v->d[i] = relu(x);
-                break;
+        case ReLU: 
+            v->d[i] = relu(x);
+            break;
 
-            case Tanh: 
-                v->d[i] = tanhf(x);
-                break;
+        case Tanh: 
+            v->d[i] = tanhf(x);
+            break;
 
-            default: 
-                assert(0 && "error");
+        default: 
+            assert(0 && "error");
         }
     }
 
     return;
 }
 
-/* m_{i,j} = f(m_{i,j}) for all m_{i,j} in M (inplace op) */
+/* compute M = f(M) (m_{i,j} = f(m_{i,j}) for all m_{i,j} in M) */
 void matrix_apply(Matrix M, Activation f) {
     assert(M);
 
@@ -88,9 +88,10 @@ void matrix_apply(Matrix M, Activation f) {
     return;
 }
 
-/* forall M_i in M, M_i += v with |v| = |M[i]| */
+/* forall m_i in M, m_i = m_i + v with |v| = |M[i]| */
 void matrix_add_vector(Matrix M, Vector v) {
-    assert(M); assert(v); assert(M->n == v->n);
+    assert(M); assert(v); 
+    assert(M->n == v->n);
 
     for (int i = 0; i < M->m; i++) { vector_add(M->d[i], v); }
 
@@ -101,18 +102,10 @@ void matrix_add_vector(Matrix M, Vector v) {
 void vector_copy_matrix(Vector v, Matrix M) {
     assert(M); assert(v);
     assert(M->m == 1 || M->n == 1);
+    assert(M->n == v->n || M->m == v->n);
 
-    if (M->m == 1) {
-        assert(M->n == v->n);
-
-        vector_copy(v, M->d[0]);
-
-        return;
-    }
-
-    // else
-    assert(M->m == v->n);
-
+    if (M->m == 1) { vector_copy(v, M->d[0]); return; }
+    /* else */
     for (int i = 0; i < M->m; i++) { v->d[i] = M->d[i]->d[0]; }
 
     return;

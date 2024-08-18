@@ -65,7 +65,7 @@ void layer_forward_batch(Layer layer, Matrix X, Matrix Z) {
 /**** nn **********************************************************************/
 
 /* create a new feedforward neural network */
-NN nn_new_(uint nlayers, Pair* arch, Activation f) {
+NN nn_new_(uint nlayers, UintPair* arch, Activation f) {
     assert(nlayers > 0);
 
     NN nn = (NN)malloc(sizeof(struct NN_t));

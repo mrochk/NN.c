@@ -17,7 +17,7 @@ Matrix forward(Neuron nh1, Neuron nh2, Neuron no, Matrix X, Vector preds) {
     h2 = neuron_forward_batch(nh2, X, h2);
 
     Vector vectors[] = {h1, h2};
-    Matrix H = matrix_from_vectors(2, vectors, 1);
+    Matrix H = matrix_new_from_vectors_(2, vectors, 1);
 
     vector_free(h1); vector_free(h2);
 

@@ -13,10 +13,10 @@
 typedef unsigned int uint;
 
 /* a pair of unsigned integers */
-typedef struct { uint a, b; } Pair;
+typedef struct { uint a, b; } UintPair;
 
 /* create a new pair of uints */
-Pair pair(int a, int b);
+UintPair pair(uint a, uint b);
 
 /* returns a random float in [-1, 1] */
 float randfloat();

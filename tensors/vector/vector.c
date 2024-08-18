@@ -55,19 +55,20 @@ void vector_free(Vector v) {
     return;
 }
 
-/* compute v := w */
-void vector_copy(Vector v, Vector w) {
-    assert(v); assert(w); assert(v->n == w->n);
-
-    for (int i = 0; i < v->n; i++) { v->d[i] = w->d[i]; }
-
-    return;
-}
-
 void vector_set_zeros(Vector v) {
     assert(v);
 
     for (int i = 0; i < v->n; i++) { v->d[i] = 0.F; }
+
+    return;
+}
+
+/* compute v := w */
+void vector_copy(Vector v, Vector w) {
+    assert(v); assert(w); 
+    assert(v->n == w->n);
+
+    for (int i = 0; i < v->n; i++) { v->d[i] = w->d[i]; }
 
     return;
 }

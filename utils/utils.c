@@ -5,7 +5,7 @@
 #include "utils.h"
 
 /* create a new pair of uints */
-Pair pair(int a, int b) { return (Pair){a, b}; }
+UintPair pair(uint a, uint b) { return (UintPair){a, b}; }
 
 /* returns a random float in [-1, 1] */
 float randfloat() {

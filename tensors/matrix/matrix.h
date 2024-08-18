@@ -27,7 +27,7 @@ Matrix matrix_new_randfloat_(int m, int n);
 Matrix matrix_new_randint_(int m, int n, int high);
 
 /* create a new matrix by concatenating vectors along the given axis */
-Matrix matrix_from_vectors(int n, Vector* vectors, int axis);
+Matrix matrix_new_from_vectors_(int n, Vector* vectors, int axis);
 
 Matrix matrix_new_from_(Matrix M);
 
