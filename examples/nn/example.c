@@ -19,13 +19,8 @@ void forward(NN nn, Matrix X, Matrix temp, Vector preds) {
     return;
 }
 
-void backward(NN nn, float eps, Matrix X, Matrix temp, Vector preds, Vector y, float lr) {
-    /*** backward ***/
-
-    Matrix dws[nn->nlayers];
-    Vector dbs[nn->nlayers];
-
-    /* compute grads */
+void compute_grads_(NN nn, Matrix X, Matrix temp, Vector preds, Vector y, 
+                    float eps, Matrix* dws, Vector* dbs) {
 
     for (int l = 0; l < nn->nlayers; l++) {
         Layer layer = nn->layers[l];
@@ -55,8 +50,6 @@ void backward(NN nn, float eps, Matrix X, Matrix temp, Vector preds, Vector y, f
             db->d[i] = (temploss_plus - temploss_minus) / (2.f*eps);
         }
 
-        // [f(x - h) - f(x + h)] / 2h
-
         for (int i = 0; i < W->m; i++) {
             for (int j = 0; j < W->n; j++) {
                 dw->d[i]->d[j] += eps;
@@ -80,32 +73,7 @@ void backward(NN nn, float eps, Matrix X, Matrix temp, Vector preds, Vector y, f
 
         dws[l] = dw;
         dbs[l] = db;
-    }
 
-    /* update parameters */
-
-    for (int l = 0; l < nn->nlayers; l++) {
-        Layer layer = nn->layers[l];
-
-        Matrix W = layer->weights;
-        Vector b = layer->biases;
-
-        Matrix dw = dws[l];
-        Vector db = dbs[l];
-
-        for (int i = 0; i < b->n; i++) {
-            b->d[i] -= lr * db->d[i];
-        }
-
-        for (int i = 0; i < W->m; i++) {
-            for (int j = 0; j < W->n; j++) {
-                W->d[i]->d[j] -= lr * dw->d[i]->d[j];
-            }
-        }
-    }
-
-    for (int l = 0; l < nn->nlayers; l++) {
-        matrix_free(dws[l]); vector_free(dbs[l]);
     }
     
     return;
@@ -173,19 +141,27 @@ void neuralnet_run_eg(int iters) {
         printf("|- iter %d, loss: %.2f\n", iter+1, loss);
 
         /*** backward ***/
+        Matrix dws[nn->nlayers];
+        Vector dbs[nn->nlayers];
 
-        backward(nn, eps, X, temp, preds, y, lr);
+        compute_grads_(nn, X, temp, preds, y, eps, dws, dbs);
+        nn_update(nn, dws, dbs, lr);
+        for (int i = 0; i < nn->nlayers; i++) { 
+            matrix_free(dws[i]); vector_free(dbs[i]); 
+        }
     }
 
-    printf("\ninitial loss: %.8f\n", init_loss);
-    printf("final loss:   %.8f\n", loss);
+    printf("\ninitial loss: %.4f\n", init_loss);
+    printf(  "final loss:   %.4f\n\n", loss);
 
-    puts("targets:");
-    vector_print(y);
+    puts("targets[:15]:");
+    for (int i = 0; i < 15; i++) { printf("%.2f ", y->d[i]); }
+    puts("\n");
 
-    puts("final preds:");
-    vector_print(preds);
-
+    puts("final preds[:15]:");
+    for (int i = 0; i < 15; i++) { printf("%.2f ", preds->d[i]); }
+    puts("");
+    
     matrix_free(X); matrix_free(temp);
     vector_free(y); vector_free(preds);
     nn_free(nn);

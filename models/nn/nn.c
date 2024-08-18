@@ -152,3 +152,28 @@ void nn_forward_batch(NN nn, Matrix X, Matrix O) {
 
     return;
 }
+
+void nn_update(NN nn, Matrix* dws, Vector* dbs, float lr) {
+    assert(nn); assert(dws); assert(dbs);
+
+    for (int l = 0; l < nn->nlayers; l++) {
+        Layer layer = nn->layers[l];
+
+        Matrix weights = layer->weights;
+        Vector biases = layer->biases;
+
+        Matrix dw = dws[l];
+        Vector db = dbs[l];
+
+        for (int i = 0; i < layer->outputs; i++) {
+            biases->d[i] -= lr * db->d[i];
+
+            Vector row = weights->d[i];
+            for (int j = 0; j < layer->inputs; j++) {
+                row->d[j] -= lr * dw->d[i]->d[j];
+            }
+        }
+    }
+
+    return;
+}
