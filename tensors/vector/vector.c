@@ -10,15 +10,15 @@
 
 Vector vector_new_(uint n) {
     Vector vector = (Vector) malloc(sizeof(struct Vector_t));
-    vector->n = n;
     vector->d = malloc(sizeof(float) * n);
+    vector->n = n;
 
     return vector;
 }
 
 Vector vector_new_zeros_(uint n) {
     Vector vector = vector_new_(n);
-    for (int i = 0; i < n; i++) { vector->d[i] = 0.0f; }
+    vector_set_zeros(vector);
 
     return vector;
 }
@@ -41,18 +41,9 @@ Vector vector_new_from_(Vector v) {
     assert(v);
 
     Vector vector = vector_new_(v->n);
-    for (int i = 0; i < v->n; i++) { vector->d[i] = v->d[i]; }
+    vector_copy(vector, v);
 
     return vector;
-}
-
-/* compute v := w */
-void vector_copy(Vector v, Vector w) {
-    assert(v); assert(w); assert(v->n == w->n);
-
-    for (int i = 0; i < v->n; i++) { v->d[i] = w->d[i]; }
-
-    return;
 }
 
 void vector_free(Vector v) {
@@ -60,6 +51,15 @@ void vector_free(Vector v) {
 
     free(v->d);
     free(v); 
+
+    return;
+}
+
+/* compute v := w */
+void vector_copy(Vector v, Vector w) {
+    assert(v); assert(w); assert(v->n == w->n);
+
+    for (int i = 0; i < v->n; i++) { v->d[i] = w->d[i]; }
 
     return;
 }

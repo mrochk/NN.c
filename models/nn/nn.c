@@ -30,7 +30,7 @@ void layer_free(Layer layer) {
     return;
 }
 
-/* computing z = f(x@W + b) with f being the chosen activation func */
+/* computing z = f(W@x + b) with f being the chosen activation func */
 void layer_forward(Layer layer, Vector x, Vector z) {
     assert(layer); assert(x); assert(z);
     assert(layer->inputs  == x->n);
@@ -71,8 +71,8 @@ NN nn_new_(uint nlayers, Pair* arch, Activation f) {
     NN nn = (NN)malloc(sizeof(struct NN_t));
 
     nn->nlayers = nlayers, nn->activation = f;
-
     nn->layers = (Layer*)malloc(sizeof(Layer) * nlayers);
+
     for (int i = 0; i < nlayers; i++) {
         int inputs = arch[i].a, outputs = arch[i].b;
 
@@ -101,7 +101,7 @@ void nn_free(NN nn) {
 
 /* compute a prediction for a single sample */
 void nn_forward(NN nn, Vector x, Vector o) {
-    assert(nn); assert(x);
+    assert(nn); assert(x); assert(o);
     assert(nn->layers[0]->inputs == x->n);
     assert(nn->layers[nn->nlayers-1]->outputs == o->n);
 
@@ -111,17 +111,16 @@ void nn_forward(NN nn, Vector x, Vector o) {
         Layer layer = nn->layers[i];
 
         Vector temp2 = vector_new_zeros_(layer->weights->m);
-
         matvecmul(layer->weights, temp1, temp2);
 
         vector_free(temp1);
-
         temp1 = temp2;
     }
 
     vector_copy(o, temp1);
-
     vector_free(temp1);
+
+    return;
 }
 
 /* compute predictions for a batch */

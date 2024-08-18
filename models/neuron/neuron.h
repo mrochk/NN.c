@@ -13,7 +13,7 @@ struct Neuron_t {
 
 typedef struct Neuron_t* Neuron; 
 
-Neuron neuron_new_(int n_inputs, Activation activation);
+Neuron neuron_new_(uint n_inputs, Activation activation);
 
 void neuron_free(Neuron n);
 
