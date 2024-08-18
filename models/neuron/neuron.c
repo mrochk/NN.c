@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
+#include <math.h>
 #include <assert.h>
 
 #include "../../utils/utils.h"
@@ -35,14 +35,17 @@ float neuron_forward(Neuron n, Vector x) {
     float z = dotprod(x, n->w) + n->b;
 
     switch (n->activation) {
-        case Identity:  return z;
-        case Sigmoid: return sigmoid(z);
-        case ReLU:    return relu(z);
-        default:      assert(0);
+        case Identity: return z;
+        case Sigmoid:  return sigmoid(z);
+        case ReLU:     return relu(z);
+        case Tanh:     return tanh(z);
+        default:       assert(0);
     }
 }
 
 Vector neuron_forward_batch(Neuron n, Matrix X, Vector preds) {
+    assert(n); assert(X); assert(preds);
+
     for (int i = 0; i < X->m; i++) {
         Vector x = X->d[i];
         preds->d[i] = neuron_forward(n, x);

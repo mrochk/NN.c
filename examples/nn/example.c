@@ -107,7 +107,7 @@ void neuralnet_run_eg(int iters) {
         pair(10, 1)
     };
 
-    NN nn = nn_new_(nlayers, arch, ReLU);
+    NN nn = nn_new_(nlayers, arch, Tanh);
 
     /*** initial preds ***/
 

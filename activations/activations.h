@@ -10,7 +10,7 @@ typedef enum {
     /* sigmoid activation function */
     Sigmoid, 
     /* tanh activation function */
-    TanH,
+    Tanh,
 } Activation;
 
 /* relu activation function */

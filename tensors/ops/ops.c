@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <math.h>
 
 #include "../vector/vector.h"
 #include "../matrix/matrix.h"
@@ -66,8 +67,9 @@ void vector_apply(Vector v, Activation f) {
                 v->d[i] = relu(x);
                 break;
 
-            case TanH: 
-                assert(0 && "not impl");
+            case Tanh: 
+                v->d[i] = tanhf(x);
+                break;
 
             default: 
                 assert(0 && "error");
