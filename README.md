@@ -13,4 +13,4 @@ For now the functions derivatives / weights gradients are calculated either *"by
 
 For the optimizer we always use the simple *non-stochastic* gradient descent algorithm.
 
-For storing numerical values (parameters etc) we use the single-precision floating-point type (`float`).
+For storing numerical values we use the single-precision floating-point type (`float`).
