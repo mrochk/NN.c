@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "../../utils/utils.h"
 #include "../../tensors/tensors.h"
+#include "../../utils/utils.h"
 
 #include "linreg.h"
 

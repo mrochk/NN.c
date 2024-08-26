@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
-#include <math.h>
 
 #include "../../tensors/tensors.h"
 #include "../../utils/utils.h"
@@ -101,4 +99,6 @@ void linreg_run_eg(int iters) {
 	matrix_free(X);
 	vector_free(predictions); vector_free(y); vector_free(dw);
 	linreg_free(model);
+
+	return;
 }
