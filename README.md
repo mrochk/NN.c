@@ -9,7 +9,7 @@ Models implemented:
 
 Examples are illustrated by fitting linear as well as non-linear functions.
 
-For now the functions derivatives / weights gradients are calculated either *"by hand"* or aproximated via finite difference for each example, but I plan on building an autograd engine soon too.
+For now the functions derivatives / weights gradients are calculated either *"by hand"* or approximated via finite difference for each example, but I plan on building an autograd engine soon too.
 
 For the optimizer we always use the simple *non-stochastic* gradient descent algorithm.
 
