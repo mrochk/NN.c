@@ -2,9 +2,8 @@
 Feedforward neural network & other ML models implemented from scratch in pure C.
 
 Models implemented:
-- (multivariate) Linear regression. [\[linreg\]](models/linreg) [\[example\]](examples/linreg)
-- (multivariate) Polynomial regression. [\[polreg\]](models/polreg) [\[example\]](examples/polreg)
-- Artificial neuron (perceptron). [\[neuron\]](models/neuron) [\[example\]](examples/neurons)
+- Linear regression. [\[linreg\]](models/linreg) [\[example\]](examples/linreg)
+- Polynomial regression. [\[polreg\]](models/polreg) [\[example\]](examples/polreg)
 - Feedforward neural network. [\[nn\]](models/nn) [\[example\]](examples/nn)
 
 For now the functions derivatives / weights gradients are calculated either *"by hand"* or aproximated via finite difference for each example, but I plan on building an autograd engine soon too.
