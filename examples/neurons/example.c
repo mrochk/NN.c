@@ -1,11 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
-#include <time.h>
 
+#include "../../tensors/tensors.h"
 #include "../../loss/loss.h"
 #include "../../utils/utils.h"
-#include "../../tensors/tensors.h"
 
 #include "../../models/neuron/neuron.h"
 
@@ -151,4 +149,6 @@ void neurons_run_eg(int iters) {
 	vector_free(predictions); vector_free(y);
 	vector_free(dw_h1); vector_free(dw_h2); vector_free(dw_o);
     neuron_free(nh1); neuron_free(nh2); neuron_free(no);
+
+	return;
 }

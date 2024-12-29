@@ -6,8 +6,10 @@ Models implemented:
 - Polynomial regression. [\[polreg\]](models/polreg) [\[example\]](examples/polreg)
 - Feedforward neural network. [\[nn\]](models/nn) [\[example\]](examples/nn)
 
-For now the functions derivatives / weights gradients are calculated either *"by hand"* or aproximated via finite difference for each example, but I plan on building an autograd engine soon too.
+Examples are illustrated by fitting linear as well as non-linear functions.
+
+For now the functions derivatives / weights gradients are calculated either *"by hand"* or approximated via finite difference for each example, but I plan on building an autograd engine soon too.
 
 For the optimizer we always use the simple *non-stochastic* gradient descent algorithm.
 
-For storing numerical values (parameters etc) we use the single-precision floating-point type (`float`).
+For storing numerical values we use the single-precision floating-point type (`float`).

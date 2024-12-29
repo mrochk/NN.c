@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <assert.h>
 
+#include "../../tensors/tensors.h"
+#include "../../activations/activations.h"
+#include "../../utils/utils.h"
+
 #include "nn.h"
 
 /**** layer *******************************************************************/

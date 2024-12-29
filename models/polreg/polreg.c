@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include <assert.h>
+#include <math.h>
+
+#include "../../tensors/tensors.h"
+#include "../../utils/utils.h"
 
 #include "polreg.h"
-#include "../../utils/utils.h"
-#include "../../tensors/tensors.h"
 
 Polreg polreg_new_(Vector powers, float lr) {
     int n_features  = powers->n;

@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include <assert.h>
+#include <math.h>
 
-#include "../../utils/utils.h"
 #include "../../tensors/tensors.h"
 #include "../../activations/activations.h"
+#include "../../utils/utils.h"
 
 #include "neuron.h"
 

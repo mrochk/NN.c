@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <time.h>
 
+#include "../../tensors/tensors.h"
+#include "../../activations/activations.h"
 #include "../../loss/loss.h"
 #include "../../utils/utils.h"
-#include "../../tensors/tensors.h"
 
 #include "../../models/nn/nn.h"
 
